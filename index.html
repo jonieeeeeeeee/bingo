@@ -15,12 +15,12 @@
   --tx:#141414;
   --mut:#5a5852;
   --bd:#141414;
-  --ac:#d4ff3a;      /* neon */
-  --ac-tx:#141414;   /* text na neon */
-  --ac2:#ff5c39;     /* oranžová (upozornenie) */
-  --ac3:#4d5dff;     /* modrá (info) */
-  --win:#141414;     /* výherná bunka - pozadie */
-  --win-tx:#d4ff3a;  /* výherná bunka - text */
+  --ac:#d4ff3a;
+  --ac-tx:#141414;
+  --ac2:#ff5c39;
+  --ac3:#4d5dff;
+  --win:#141414;
+  --win-tx:#d4ff3a;
   --warn:#ff5c39;
   --sh:4px 4px 0 var(--bd);
   --sh-sm:3px 3px 0 var(--bd);
@@ -30,21 +30,10 @@
 }
 @media (prefers-color-scheme:dark){
   :root:not([data-theme="light"]){
-    --bg:#0f0f0f;
-    --card:#181818;
-    --tx:#f5f1e8;
-    --mut:#a8a49a;
-    --bd:#f5f1e8;
-    --ac:#d4ff3a;
-    --ac-tx:#0f0f0f;
-    --ac2:#ff5c39;
-    --ac3:#7c88ff;
-    --win:#d4ff3a;
-    --win-tx:#0f0f0f;
-    --warn:#ff7a5c;
-    --sh:4px 4px 0 var(--bd);
-    --sh-sm:3px 3px 0 var(--bd);
-    color-scheme:dark;
+    --bg:#0f0f0f;--card:#181818;--tx:#f5f1e8;--mut:#a8a49a;--bd:#f5f1e8;
+    --ac:#d4ff3a;--ac-tx:#0f0f0f;--ac2:#ff5c39;--ac3:#7c88ff;
+    --win:#d4ff3a;--win-tx:#0f0f0f;--warn:#ff7a5c;
+    --sh:4px 4px 0 var(--bd);--sh-sm:3px 3px 0 var(--bd);color-scheme:dark;
   }
 }
 :root[data-theme="dark"]{
@@ -56,333 +45,79 @@
 *{box-sizing:border-box}
 html{scroll-padding-top:env(safe-area-inset-top,0px)}
 body{
-  margin:0;
-  background:var(--bg);
-  color:var(--tx);
-  font-family:var(--font);
-  padding:16px;
-  padding-top:calc(16px + env(safe-area-inset-top,0px));
+  margin:0;background:var(--bg);color:var(--tx);font-family:var(--font);
+  padding:16px;padding-top:calc(16px + env(safe-area-inset-top,0px));
   padding-bottom:calc(16px + env(safe-area-inset-bottom,0px));
-  max-width:600px;
-  margin-inline:auto;
-  line-height:1.4;
-  -webkit-font-smoothing:antialiased;
+  max-width:600px;margin-inline:auto;line-height:1.4;-webkit-font-smoothing:antialiased;
 }
 [hidden]{display:none!important}
 
-/* ---- nadpisy ---- */
-h1{
-  font-family:var(--font);
-  font-weight:700;
-  font-size:1.85rem;
-  line-height:1.1;
-  letter-spacing:-.02em;
-  margin:8px 0 6px;
-  color:var(--tx);
-  /* žiadny gradient - len čistý text */
-}
-h2{
-  font-family:var(--mono);
-  font-weight:800;
-  font-size:.78rem;
-  text-transform:uppercase;
-  letter-spacing:.14em;
-  margin:22px 0 10px;
-  color:var(--tx);
-  padding-bottom:6px;
-  border-bottom:var(--border);
-}
+h1{font-family:var(--font);font-weight:700;font-size:1.85rem;line-height:1.1;letter-spacing:-.02em;margin:8px 0 6px;color:var(--tx)}
+h2{font-family:var(--mono);font-weight:800;font-size:.78rem;text-transform:uppercase;letter-spacing:.14em;margin:22px 0 10px;color:var(--tx);padding-bottom:6px;border-bottom:var(--border)}
 .sub{color:var(--mut);margin:0 0 16px;font-size:.94rem;line-height:1.5}
 
-/* ---- boxy = "karty na nástenku" ---- */
-.box{
-  background:var(--card);
-  border:var(--border);
-  border-radius:0;
-  padding:16px;
-  margin-bottom:14px;
-  box-shadow:var(--sh);
-}
-.box h3{
-  margin:0 0 12px;
-  font-family:var(--mono);
-  font-size:.74rem;
-  font-weight:800;
-  text-transform:uppercase;
-  letter-spacing:.14em;
-  color:var(--tx);
-}
+.box{background:var(--card);border:var(--border);border-radius:0;padding:16px;margin-bottom:14px;box-shadow:var(--sh)}
+.box h3{margin:0 0 12px;font-family:var(--mono);font-size:.74rem;font-weight:800;text-transform:uppercase;letter-spacing:.14em;color:var(--tx)}
 
-/* ---- formuláre ---- */
-select,textarea,input,button{
-  font-family:var(--font);
-  font-size:1rem;
-  color:var(--tx);
-  background:var(--card);
-  border:var(--border);
-  border-radius:0;
-  padding:11px 13px;
-}
-select,input,textarea{
-  width:100%;
-  margin-bottom:10px;
-  box-shadow:var(--sh-sm);
-}
+select,textarea,input,button{font-family:var(--font);font-size:1rem;color:var(--tx);background:var(--card);border:var(--border);border-radius:0;padding:11px 13px}
+select,input,textarea{width:100%;margin-bottom:10px;box-shadow:var(--sh-sm)}
 textarea{resize:vertical;min-height:80px;font-family:var(--font)}
-input:focus,select:focus,textarea:focus{
-  outline:none;
-  background:var(--ac);
-  color:var(--ac-tx);
-  box-shadow:var(--sh-sm);
-}
+input:focus,select:focus,textarea:focus{outline:none;background:var(--ac);color:var(--ac-tx);box-shadow:var(--sh-sm)}
 input::placeholder,textarea::placeholder{color:var(--mut);opacity:.85}
 input:focus::placeholder{color:var(--ac-tx);opacity:.6}
 
-/* ---- buttony ---- */
-button{
-  cursor:pointer;
-  font-weight:600;
-  letter-spacing:.01em;
-  box-shadow:var(--sh-sm);
-  transition:transform .05s ease, box-shadow .05s ease;
-  background:var(--card);
-  color:var(--tx);
-}
+button{cursor:pointer;font-weight:600;letter-spacing:.01em;box-shadow:var(--sh-sm);transition:transform .05s ease, box-shadow .05s ease;background:var(--card);color:var(--tx)}
 button:hover{background:var(--ac);color:var(--ac-tx)}
-button:active{
-  transform:translate(3px,3px);
-  box-shadow:0 0 0 var(--bd);
-}
-button.p{
-  background:var(--ac);
-  color:var(--ac-tx);
-  border:var(--border);
-  font-weight:700;
-}
+button:active{transform:translate(3px,3px);box-shadow:0 0 0 var(--bd)}
+button.p{background:var(--ac);color:var(--ac-tx);border:var(--border);font-weight:700}
 button.p:hover{background:var(--tx);color:var(--ac)}
 
-/* ---- riadky ---- */
 .row{display:flex;gap:10px;margin-bottom:10px;flex-wrap:wrap}
 .row>*{flex:1;min-width:0}
 
-/* ---- avatary ---- */
 #avs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}
-.av{
-  font-size:1.35rem;
-  padding:8px 10px;
-  flex:none;
-  min-width:44px;
-  background:var(--card);
-}
+.av{font-size:1.35rem;padding:8px 10px;flex:none;min-width:44px;background:var(--card)}
 .av:hover{background:var(--bg)}
-.av.sel{
-  background:var(--ac);
-  color:var(--ac-tx);
-  box-shadow:var(--sh);
-  transform:translate(-1px,-1px);
-}
+.av.sel{background:var(--ac);color:var(--ac-tx);box-shadow:var(--sh);transform:translate(-1px,-1px)}
 
-/* ---- error ---- */
-.err{
-  color:var(--warn);
-  font-family:var(--mono);
-  font-size:.78rem;
-  font-weight:600;
-  min-height:1em;
-  margin:4px 0;
-  text-transform:uppercase;
-  letter-spacing:.04em;
-}
-.err:not(:empty)::before{content:"⚠ ";}
+.err{color:var(--warn);font-family:var(--mono);font-size:.78rem;font-weight:600;min-height:1em;margin:4px 0;text-transform:uppercase;letter-spacing:.04em}
+.err:not(:empty)::before{content:"⚠ "}
 
-/* ---- game header ---- */
-.top{
-  display:flex;
-  align-items:stretch;
-  gap:8px;
-  margin-bottom:10px;
-}
-.top b{
-  flex:1;
-  min-width:0;
-  overflow:hidden;
-  text-overflow:ellipsis;
-  white-space:nowrap;
-  font-size:1.05rem;
-  font-weight:700;
-  display:flex;
-  align-items:center;
-  padding:8px 12px;
-  background:var(--card);
-  border:var(--border);
-  box-shadow:var(--sh-sm);
-}
+.top{display:flex;align-items:stretch;gap:8px;margin-bottom:10px}
+.top b{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:1.05rem;font-weight:700;display:flex;align-items:center;padding:8px 12px;background:var(--card);border:var(--border);box-shadow:var(--sh-sm)}
 .top #lv,.top #rc{flex:none}
-.chip{
-  flex:none;
-  font-family:var(--mono);
-  font-weight:800;
-  font-size:.9rem;
-  letter-spacing:.16em;
-  background:var(--tx);
-  color:var(--bg);
-  border:var(--border);
-  padding:8px 12px;
-}
+.chip{flex:none;font-family:var(--mono);font-weight:800;font-size:.9rem;letter-spacing:.16em;background:var(--tx);color:var(--bg);border:var(--border);padding:8px 12px}
 .chip:hover{background:var(--ac);color:var(--ac-tx)}
 
-#st{
-  font-family:var(--mono);
-  font-size:.72rem;
-  font-weight:600;
-  color:var(--mut);
-  margin:4px 0 10px;
-  text-transform:uppercase;
-  letter-spacing:.06em;
-}
+#st{font-family:var(--mono);font-size:.72rem;font-weight:600;color:var(--mut);margin:4px 0 10px;text-transform:uppercase;letter-spacing:.06em}
 
-/* ---- status msg ---- */
-#msg{
-  text-align:center;
-  font-family:var(--font);
-  font-size:1.5rem;
-  font-weight:700;
-  letter-spacing:-.01em;
-  min-height:1.9rem;
-  margin:6px 0;
-  color:var(--tx);
-}
-#msg:not(:empty){
-  background:var(--ac);
-  color:var(--ac-tx);
-  border:var(--border);
-  padding:10px;
-  box-shadow:var(--sh);
-  animation:msgpop .3s;
-}
+#msg{text-align:center;font-family:var(--font);font-size:1.5rem;font-weight:700;letter-spacing:-.01em;min-height:1.9rem;margin:6px 0;color:var(--tx)}
+#msg:not(:empty){background:var(--ac);color:var(--ac-tx);border:var(--border);padding:10px;box-shadow:var(--sh);animation:msgpop .3s}
 @keyframes msgpop{0%{transform:scale(.9) rotate(-1deg)}100%{transform:scale(1) rotate(0)}}
 
-/* ---- lose banner ---- */
-#lose{
-  background:var(--ac2);
-  color:#fff;
-  border:var(--border);
-  padding:12px 14px;
-  margin:10px 0;
-  text-align:center;
-  font-weight:700;
-  font-size:.95rem;
-  box-shadow:var(--sh);
-  transform:rotate(-.5deg);
-}
+#lose{background:var(--ac2);color:#fff;border:var(--border);padding:12px 14px;margin:10px 0;text-align:center;font-weight:700;font-size:.95rem;box-shadow:var(--sh);transform:rotate(-.5deg)}
 
-/* ---- bingo grid ---- */
 #cf{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:50}
-#grid{
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:8px;
-  margin:12px 0;
-}
-.c{
-  aspect-ratio:1;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  text-align:center;
-  padding:6px;
-  font-size:clamp(.65rem,2.9vw,.88rem);
-  line-height:1.15;
-  font-weight:500;
-  background:var(--card);
-  border:var(--border);
-  border-radius:0;
-  box-shadow:var(--sh-sm);
-  overflow:hidden;
-  word-break:break-word;
-  cursor:pointer;
-  user-select:none;
-  hyphens:auto;
-  transition:transform .08s,background .12s,box-shadow .08s;
-  color:var(--tx);
-}
+#grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:12px 0}
+.c{aspect-ratio:1;display:flex;align-items:center;justify-content:center;text-align:center;padding:6px;font-size:clamp(.65rem,2.9vw,.88rem);line-height:1.15;font-weight:500;background:var(--card);border:var(--border);border-radius:0;box-shadow:var(--sh-sm);overflow:hidden;word-break:break-word;cursor:pointer;user-select:none;hyphens:auto;transition:transform .08s,background .12s,box-shadow .08s;color:var(--tx)}
 .c:hover{background:var(--bg)}
 .c:active{transform:translate(2px,2px);box-shadow:0 0 0 var(--bd)}
-.c.on{
-  background:var(--tx);
-  color:var(--ac);
-  font-weight:700;
-  box-shadow:var(--sh-sm);
-  animation:pop .22s;
-}
+.c.on{background:var(--tx);color:var(--ac);font-weight:700;box-shadow:var(--sh-sm);animation:pop .22s}
 .c.on:hover{background:#000;color:var(--ac)}
-.c.w{
-  background:var(--ac);
-  color:var(--ac-tx);
-  font-weight:800;
-  border-color:var(--bd);
-}
-.c.w::after{
-  content:"";
-  position:absolute;
-  /* nič - len pre istotu */
-}
-.edm .c{
-  outline:2px dashed var(--ac2);
-  outline-offset:-6px;
-  cursor:crosshair;
-}
-@keyframes pop{
-  0%{transform:scale(1)}
-  50%{transform:scale(1.12) rotate(-1deg)}
-  100%{transform:scale(1)}
-}
+.c.w{background:var(--ac);color:var(--ac-tx);font-weight:800;border-color:var(--bd)}
+.edm .c{outline:2px dashed var(--ac2);outline-offset:-6px;cursor:crosshair}
+@keyframes pop{0%{transform:scale(1)}50%{transform:scale(1.12) rotate(-1deg)}100%{transform:scale(1)}}
 
-/* ---- rebríček ---- */
-.pl{
-  display:flex;
-  align-items:center;
-  gap:10px;
-  background:var(--card);
-  border:var(--border);
-  padding:10px 12px;
-  margin-bottom:8px;
-  box-shadow:var(--sh-sm);
-}
-.pl.me{
-  background:var(--ac);
-  color:var(--ac-tx);
-}
+.pl{display:flex;align-items:center;gap:10px;background:var(--card);border:var(--border);padding:10px 12px;margin-bottom:8px;box-shadow:var(--sh-sm)}
+.pl.me{background:var(--ac);color:var(--ac-tx)}
 .pl.me .pn,.pl.me .pi{color:var(--ac-tx)}
-.pl.bg{
-  background:var(--tx);
-  color:var(--ac);
-}
+.pl.bg{background:var(--tx);color:var(--ac)}
 .pl.bg .pn,.pl.bg .pi{color:var(--ac)}
 .pl.bg .pip{border-color:var(--ac)}
-
-.pa{
-  font-size:1.35rem;
-  flex:none;
-  min-width:36px;
-  text-align:center;
-}
-.pn{
-  flex:1;
-  min-width:0;
-  overflow:hidden;
-  text-overflow:ellipsis;
-  white-space:nowrap;
-  font-weight:600;
-  font-size:.95rem;
-}
+.pa{font-size:1.35rem;flex:none;min-width:36px;text-align:center}
+.pn{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-weight:600;font-size:.95rem}
 .pips{display:flex;gap:3px;flex:none}
-.pip{
-  width:14px;height:14px;
-  border-radius:0;
-  background:var(--card);
-  border:2px solid var(--bd);
-}
+.pip{width:14px;height:14px;border-radius:0;background:var(--card);border:2px solid var(--bd)}
 .pip.f{background:var(--tx)}
 .pip.f.hot{background:var(--ac2)}
 .pip.f.bg{background:var(--ac)}
@@ -393,129 +128,108 @@ button.p:hover{background:var(--tx);color:var(--ac)}
 .pl.bg .pip.f{background:var(--ac)}
 .pl.bg .pip.f.hot{background:var(--ac2)}
 .pl.bg .pip.f.bg{background:var(--ac)}
+.pi{font-family:var(--mono);font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.04em;text-align:right;min-width:96px;color:var(--mut)}
 
-.pi{
-  font-family:var(--mono);
-  font-size:.68rem;
-  font-weight:700;
-  text-transform:uppercase;
-  letter-spacing:.04em;
-  text-align:right;
-  min-width:96px;
-  color:var(--mut);
-}
-
-/* ---- details (host panel) ---- */
-details{
-  margin-top:14px;
-  background:var(--card);
-  border:var(--border);
-  padding:14px;
-  box-shadow:var(--sh);
-}
-summary{
-  cursor:pointer;
-  font-family:var(--mono);
-  font-weight:800;
-  font-size:.76rem;
-  text-transform:uppercase;
-  letter-spacing:.12em;
-  list-style:none;
-  user-select:none;
-}
+details{margin-top:14px;background:var(--card);border:var(--border);padding:14px;box-shadow:var(--sh)}
+summary{cursor:pointer;font-family:var(--mono);font-weight:800;font-size:.76rem;text-transform:uppercase;letter-spacing:.12em;list-style:none;user-select:none}
 summary::-webkit-details-marker{display:none}
 summary::before{content:"▸ ";display:inline-block;transition:transform .15s}
 details[open] summary::before{transform:rotate(90deg)}
 details p,details small{color:var(--mut);font-size:.85rem}
 details small{font-family:var(--mono)}
 
-/* ---- host phrase rows ---- */
 .hr{display:flex;gap:6px;margin-bottom:8px;align-items:stretch}
 .hr input{margin:0;box-shadow:none;border-width:2px}
 .hr button{flex:none;padding:8px 12px;font-family:var(--mono);font-weight:800}
 
-/* ---- bottom sheet ---- */
-#sh{
-  position:fixed;
-  left:0;right:0;bottom:0;
-  z-index:40;
-  background:var(--card);
-  border-top:3px solid var(--bd);
-  padding:16px;
-  padding-bottom:calc(16px + env(safe-area-inset-bottom,0px));
-  max-height:78%;
-  overflow:auto;
-  max-width:600px;
-  margin:auto;
-  box-shadow:0 -6px 0 rgba(20,20,20,.15);
-}
-#sh > b{
-  display:block;
-  font-family:var(--mono);
-  font-size:.76rem;
-  font-weight:800;
-  text-transform:uppercase;
-  letter-spacing:.14em;
-  margin-bottom:10px;
-  padding-bottom:8px;
-  border-bottom:var(--border);
-}
+#sh{position:fixed;left:0;right:0;bottom:0;z-index:40;background:var(--card);border-top:3px solid var(--bd);padding:16px;padding-bottom:calc(16px + env(safe-area-inset-bottom,0px));max-height:78%;overflow:auto;max-width:600px;margin:auto;box-shadow:0 -6px 0 rgba(20,20,20,.15)}
+#sh > b{display:block;font-family:var(--mono);font-size:.76rem;font-weight:800;text-transform:uppercase;letter-spacing:.14em;margin-bottom:10px;padding-bottom:8px;border-bottom:var(--border)}
 #sl{display:flex;flex-direction:column;gap:6px;margin-top:12px}
-#sl button{
-  text-align:left;
-  font-size:.9rem;
-  padding:10px 12px;
-  font-weight:500;
-  box-shadow:var(--sh-sm);
-}
+#sl button{text-align:left;font-size:.9rem;padding:10px 12px;font-weight:500;box-shadow:var(--sh-sm)}
 
-/* ---- malé doplnky pre pôvodné "small" a "style='color:var(--mut)'" ---- */
 small{color:var(--mut);font-size:.82rem}
+
+/* --- Login / auth stav --- */
+#aBanner{
+  background:var(--ac2);color:#fff;border:var(--border);padding:10px 14px;
+  margin-bottom:14px;font-weight:600;font-size:.9rem;box-shadow:var(--sh);
+  display:flex;align-items:center;gap:10px;justify-content:space-between;
+}
+#aBanner button{padding:6px 10px;font-size:.85rem;background:#fff;color:#141414;border:2px solid #141414;box-shadow:2px 2px 0 #141414}
+#aBanner button:hover{background:var(--ac)}
 </style>
 </head>
 <body>
 <canvas id="cf"></canvas>
 
+<!-- ================= LOGIN ================= -->
 <section id="login" hidden>
   <h1>🎯 Prednáškové bingo</h1>
-  <p class="sub">Účet potrebuje len ten, kto vytvára miestnosť.</p>
+  <p class="sub">Prihlás sa alebo si vytvor účet – potom môžeš vytvárať miestnosti.</p>
   <div class="box">
+    <h3>🔐 Prihlásenie</h3>
     <input id="le" type="email" placeholder="E-mail" autocomplete="email" autocapitalize="none">
     <input id="lp" type="password" placeholder="Heslo (min. 6 znakov)" autocomplete="current-password">
-    <div class="row"><button class="p" id="li">Prihlásiť</button><button id="su">Vytvoriť účet</button></div>
+    <div class="row">
+      <button class="p" id="li">Prihlásiť sa</button>
+      <button id="su">Vytvoriť účet</button>
+    </div>
     <div class="err" id="lerr"></div>
-    <button id="so" style="width:100%">← Späť (hrať ako hosť)</button>
+  </div>
+  <div class="box">
+    <h3>🚪 Hrať bez účtu</h3>
+    <p class="sub" style="margin:0 0 10px">Ak sa nechceš registrovať, môžeš sa pripojiť k existujúcej miestnosti pomocou kódu. Vytvárať miestnosti však môžu len registrovaní učitelia.</p>
+    <button id="so" style="width:100%">Hrať ako hosť →</button>
   </div>
 </section>
 
+<!-- ================= LOBBY ================= -->
 <section id="lobby" hidden>
+  <div id="aBanner" hidden>
+    <span id="aBannerMsg"></span>
+    <button id="aBannerBtn">Prihlásiť sa</button>
+  </div>
   <h1>🎯 Prednáškové bingo</h1>
   <p class="sub">Vytvor miestnosť, pošli kód spolužiakom a hrajte spolu naživo.</p>
-  <div class="box">
+
+  <div class="box" id="profBox">
     <h3>👤 Tvoj profil</h3>
     <div id="avs"></div>
     <input id="nm" placeholder="Prezývka" maxlength="20">
-    <div class="row"><small id="auth" style="align-self:center"></small><button id="lo" style="flex:0 0 auto">Odhlásiť</button></div>
+    <div class="row">
+      <small id="auth" style="align-self:center"></small>
+      <button id="lo" style="flex:0 0 auto">Odhlásiť</button>
+    </div>
   </div>
+
   <div class="box">
     <h3>🔑 Pripojiť sa do miestnosti</h3>
-    <div class="row"><input id="jc" placeholder="KÓD" maxlength="5" style="text-transform:uppercase;letter-spacing:.2em;margin:0;font-family:var(--mono);font-weight:800"><button class="p" id="jb" style="flex:0 0 auto">Pripojiť</button></div>
+    <div class="row">
+      <input id="jc" placeholder="KÓD" maxlength="5" style="text-transform:uppercase;letter-spacing:.2em;margin:0;font-family:var(--mono);font-weight:800">
+      <button class="p" id="jb" style="flex:0 0 auto">Pripojiť</button>
+    </div>
     <div class="err" id="jerr"></div>
   </div>
+
   <div class="box" id="hlp">
     <h3>🧑‍🏫 Chceš vytvoriť vlastnú miestnosť?</h3>
-    <p class="sub" style="margin:0 0 10px">Účet potrebuje len ten, kto miestnosť vytvára. Ostatní sa pripoja kódom bez prihlásenia.</p>
+    <p class="sub" style="margin:0 0 10px">Na vytvorenie miestnosti potrebuješ účet. Prihlás sa alebo sa zaregistruj.</p>
     <button class="p" id="gl" style="width:100%">Prihlásiť / vytvoriť účet</button>
   </div>
-  <div class="box" id="tb">
+
+  <div class="box" id="tb" hidden>
     <h3>🧑‍🏫 Učitelia a hlášky</h3>
     <div id="tl"></div>
     <input id="tn" placeholder="Meno učiteľa" maxlength="40">
     <textarea id="tp" placeholder="Hlášky – jedna na riadok" style="min-height:90px"></textarea>
-    <div class="row"><button class="p" id="tsv">Uložiť učiteľa</button><button id="tcl">Nový / zrušiť</button></div>
+    <div class="row">
+      <button class="p" id="tsv">Uložiť učiteľa</button>
+      <button id="tcl">Nový / zrušiť</button>
+    </div>
     <small>Učitelia sú verejní – vybrať si ich môže každý pri vytváraní miestnosti.</small>
   </div>
-  <div class="box" id="cbx">
+
+  <div class="box" id="cbx" hidden>
     <h3>➕ Vytvoriť miestnosť</h3>
     <input id="rn" placeholder="Názov (napr. Matika 1 – utorok)" maxlength="40">
     <select id="rp" aria-label="Predvolený zoznam"></select>
@@ -523,8 +237,13 @@ small{color:var(--mut);font-size:.82rem}
   </div>
 </section>
 
+<!-- ================= GAME ================= -->
 <section id="game" hidden>
-  <div class="top"><button id="lv">←</button><b id="rt"></b><button class="chip" id="rc" title="Kopírovať kód"></button></div>
+  <div class="top">
+    <button id="lv">←</button>
+    <b id="rt"></b>
+    <button class="chip" id="rc" title="Kopírovať kód"></button>
+  </div>
   <div id="st"></div>
   <div id="msg"></div>
   <div id="lose" hidden></div>
@@ -541,248 +260,544 @@ small{color:var(--mut);font-size:.82rem}
     <p><small>Frázy v miestnosti (z nich sa skladajú karty). Nové kolo všetkým vygeneruje čistú kartu.</small></p>
     <div id="hl"></div>
     <div class="hr"><input id="hn" placeholder="Nová fráza"><button id="ha">➕</button></div>
-    <div class="row"><button class="p" id="hs">Uložiť frázy</button><button id="hr">🔄 Nové kolo</button></div>
+    <div class="row">
+      <button class="p" id="hs">Uložiť frázy</button>
+      <button id="hr">🔄 Nové kolo</button>
+    </div>
   </details>
 </section>
 
+<!-- bottom sheet -->
 <div id="sh" hidden>
   <b>Zmeniť políčko</b>
   <input id="si" placeholder="Hľadaj frázu alebo napíš vlastnú" maxlength="70" style="margin-top:8px">
-  <div class="row"><button class="p" id="sv">Použiť môj text</button><button id="sr">🎲 Náhodná</button><button id="sx">Zavrieť</button></div>
+  <div class="row">
+    <button class="p" id="sv">Použiť môj text</button>
+    <button id="sr">🎲 Náhodná</button>
+    <button id="sx">Zavrieť</button>
+  </div>
   <div id="sl"></div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
 <script>
-/* ===== JS zostáva rovnaký ako v tvojom súbore ===== */
-const SUPABASE_URL="https://YOUR-PROJECT.supabase.co",SUPABASE_ANON_KEY="YOUR-ANON-KEY";
-const N=16,K="bingo_v4";
-const $=i=>document.getElementById(i);
-const DEF=[
- {id:"kollar",name:"Mgr. Jozef Kollár, PhD.",phrases:["Toto už viete zo strednej školy","To je úplne triviálne","Pozor, tu sa na skúške najčastejšie mýlite","Upravíme si to do krajšieho tvaru","Tento príklad bol na minulom zápočte","Zvyšok si doma ľahko dopočítate","Nezabudnite na definičný obor!","Je to všetkým jasné? (hrobové ticho)","Vidíte to tam všetci?","Kto pôjde tento príklad vypočítať k tabuli?","Spravíme to z hlavy, nebudeme to rozpisovať","Tu použijeme malý matematický trik","Pozrime sa na to sedliackym rozumom","Veľký pozor na znamienko v tomto kroku","Ak neviete toto, na skúšku ani nechoďte","Tento krok preskočíme, to je čistá algebra","Na prednáške ste si to už dokazovali","Ešte stihneme jeden rýchly príklad pred koncom","Celá tabuľa plná, výsledok je 0 alebo 1","Stratí sa mínus a hľadá sa o 5 riadkov nižšie","Zmazanie tabule holou rukou alebo rukávom","Nekonečno (∞) vyzerá ako deformovaný zemiak","Grécke písmeno, ktoré nevieš prečítať (ξ, ζ)","Zlomok na tri poschodia","Písanie tak nízko, že zadné rady nič nevidia","Zotretie tabule skôr, než si to stihneš odpísať","Krieda/fixka vypovie službu v strede príkladu","Kvílivý zvuk kriedy/fixky","Jeden príklad trvá vyše 20 minút","Študent opraví chybu vo výpočte cvičiaceho","Otázka z pléna: „Bude toto na zápočte?“","Niekto príde o 10+ minút neskôr","Všetci hľadajú niečo v batohu, keď sa vyvoláva","Niekto v prvej lavici horlivo prikyvuje","Spolužiak vedľa otvorí WolframAlpha / GPT","Hlasný zúfalý povzdych zo zadnej lavice","Niekto v lavici pozerá šport / e-shop","Najťažší príklad sa začne riešiť 3 min pred koncom","Niekomu spadne fľaša/pero v úplnom tichu","Hromadný kontrolný pohľad na hodinky"]},
- {id:"d1",name:"Učiteľ 1 (ukážka)",phrases:["„Ako vidíte“","Zabudol heslo k počítaču","Projektor nefunguje","Odbočil od témy","„Toto nebude na skúške“","Prišiel neskoro","Kreslí na tabuľu a nikto nevidí","Spomenul svoju diplomovku","„Ešte tri minúty“","Prekročil čas","Zadal domácu úlohu","Pýta sa „Je to jasné?“","Niekomu zazvonil mobil","Niekto zaspal vpredu","„Pozrieme sa na príklad“","Povedal meno študenta zle","Vtip, ktorý nikto nepochopil","„Vráťme sa k tomu neskôr“","Prezentácia má 80+ slajdov","Povedal „napríklad“ 5×"]},
- {id:"d2",name:"Učiteľ 2 (ukážka)",phrases:["Zrušil cvičenie","Mení termín testu","„Nie je to také ťažké“","Píše mail počas hodiny","Zabudol pripomenúť odovzdanie","Opravuje vlastnú chybu na slajde","„To si pozrite doma“","Káva na stole","Číta zo slajdov","Nahlas hovorí „hmm“","Dá bonusový bod","Zmení zadanie","Pýta sa na dochádzku","Online spojenie padlo","Pozná všetkých menom"]}
+/* ================= KONFIGURÁCIA ================= */
+const SUPABASE_URL = "https://lahcfpsrirulqmvtpjqa.supabase.co";   // <-- ZMEŇ
+const SUPABASE_ANON_KEY = "sb_publishable_xZ_FVOFcMtJbh1sdAHnl1g_KpqwZgIf";                  // <-- ZMEŇ
+
+/* ================= KONŠTANTY ================= */
+const N = 16, K = "bingo_v4";
+const $ = id => document.getElementById(id);
+const DEF = [
+  {id:"kollar",name:"Mgr. Jozef Kollár, PhD.",phrases:[
+    "Toto už viete zo strednej školy","To je úplne triviálne",
+    "Pozor, tu sa na skúške najčastejšie mýlite","Upravíme si to do krajšieho tvaru",
+    "Tento príklad bol na minulom zápočte","Zvyšok si doma ľahko dopočítate",
+    "Nezabudnite na definičný obor!","Je to všetkým jasné? (hrobové ticho)",
+    "Vidíte to tam všetci?","Kto pôjde tento príklad vypočítať k tabuli?",
+    "Spravíme to z hlavy, nebudeme to rozpisovať","Tu použijeme malý matematický trik",
+    "Pozrime sa na to sedliackym rozumom","Veľký pozor na znamienko v tomto kroku",
+    "Ak neviete toto, na skúšku ani nechoďte","Tento krok preskočíme, to je čistá algebra",
+    "Na prednáške ste si to už dokazovali","Ešte stihneme jeden rýchly príklad pred koncom",
+    "Celá tabuľa plná, výsledok je 0 alebo 1","Stratí sa mínus a hľadá sa o 5 riadkov nižšie",
+    "Zmazanie tabule holou rukou alebo rukávom","Nekonečno (∞) vyzerá ako deformovaný zemiak",
+    "Grécke písmeno, ktoré nevieš prečítať (ξ, ζ)","Zlomok na tri poschodia",
+    "Písanie tak nízko, že zadné rady nič nevidia","Zotretie tabule skôr, než si to stihneš odpísať",
+    "Krieda/fixka vypovie službu v strede príkladu","Kvílivý zvuk kriedy/fixky",
+    "Jeden príklad trvá vyše 20 minút","Študent opraví chybu vo výpočte cvičiaceho",
+    "Otázka z pléna: „Bude toto na zápočte?“","Niekto príde o 10+ minút neskôr",
+    "Všetci hľadajú niečo v batohu, keď sa vyvoláva","Niekto v prvej lavici horlivo prikyvuje",
+    "Spolužiak vedľa otvorí WolframAlpha / GPT","Hlasný zúfalý povzdych zo zadnej lavice",
+    "Niekto v lavici pozerá šport / e-shop","Najťažší príklad sa začne riešiť 3 min pred koncom",
+    "Niekomu spadne fľaša/pero v úplnom tichu","Hromadný kontrolný pohľad na hodinky"
+  ]},
+  {id:"d1",name:"Učiteľ 1 (ukážka)",phrases:[
+    "„Ako vidíte“","Zabudol heslo k počítaču","Projektor nefunguje","Odbočil od témy",
+    "„Toto nebude na skúške“","Prišiel neskoro","Kreslí na tabuľu a nikto nevidí",
+    "Spomenul svoju diplomovku","„Ešte tri minúty“","Prekročil čas","Zadal domácu úlohu",
+    "Pýta sa „Je to jasné?“","Niekomu zazvonil mobil","Niekto zaspal vpredu",
+    "„Pozrieme sa na príklad“","Povedal meno študenta zle","Vtip, ktorý nikto nepochopil",
+    "„Vráťme sa k tomu neskôr“","Prezentácia má 80+ slajdov","Povedal „napríklad“ 5×"
+  ]},
+  {id:"d2",name:"Učiteľ 2 (ukážka)",phrases:[
+    "Zrušil cvičenie","Mení termín testu","„Nie je to také ťažké“","Píše mail počas hodiny",
+    "Zabudol pripomenúť odovzdanie","Opravuje vlastnú chybu na slajde","„To si pozrite doma“",
+    "Káva na stole","Číta zo slajdov","Nahlas hovorí „hmm“","Dá bonusový bod","Zmení zadanie",
+    "Pýta sa na dochádzku","Online spojenie padlo","Pozná všetkých menom"
+  ]}
 ];
-const LINES=[];
-for(let i=0;i<4;i++)LINES.push({k:"riadku",c:[0,1,2,3].map(j=>i*4+j)});
-for(let i=0;i<4;i++)LINES.push({k:"stĺpci",c:[0,1,2,3].map(j=>j*4+i)});
+const LINES = [];
+for (let i = 0; i < 4; i++) LINES.push({k:"riadku",c:[0,1,2,3].map(j => i*4+j)});
+for (let i = 0; i < 4; i++) LINES.push({k:"stĺpci",c:[0,1,2,3].map(j => j*4+i)});
 LINES.push({k:"uhlopriečke",c:[0,5,10,15]},{k:"uhlopriečke",c:[3,6,9,12]});
-function prog(m){let best=0,bk="",lines=0;
- LINES.forEach(l=>{const n=l.c.filter(i=>m[i]).length;if(n===4)lines++;else if(n>best){best=n;bk=l.k}});
- const total=m.filter(Boolean).length,b=total===N?1:0;
- return{best:b?4:best,bk,b,lines,total}}
-const sb=(window.supabase&&!SUPABASE_URL.includes("YOUR-"))?window.supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY):null;
-let guest=false,uid=null,email="",room=null,code="",local=false,players=[],chan=null,selCell=-1,editing=false,hp=null,confirmT=null,allT=[],editT=null;
-let me;try{me=JSON.parse(localStorage.getItem(K))||{}}catch(e){me={}}
-me.name=me.name||"";me.av=me.av||"🦊";me.cards=me.cards||{};
-const AV=["🦊","🐼","🐸","🦄","🐙","🦉","🐯","🐧","🦖","🐝"];
-const A="ABCDEFGHJKMNPQRSTUVWXYZ23456789";
-const gen=()=>Array.from({length:5},()=>A[Math.random()*A.length|0]).join("");
-const save=()=>{try{localStorage.setItem(K,JSON.stringify(me))}catch(e){}};
-const toast=t=>{$("st").textContent=t};
-const keyOf=()=>code+"#"+(room.round||0);
-const card=()=>me.cards[keyOf()];
-const pool=()=>room.phrases||[];
-const isHost=()=>room&&(local||(uid&&room.host===uid));
-const TL=()=>[...DEF,...allT.map(t=>({id:t.id,name:t.name+(t.owner===uid?"":" (verejný)"),phrases:t.phrases||[]}))];
-let firstWin=true,firstSnap=true;const seenW=new Set();
-const SAD=["Trest: dnes platíš kávu ☕","Minúta ticha pre tvoju kartu 🕯️","Tvoja karta bola jednoducho menej šťastná 🍀","Nabudúce skús označovať aj to, čo sa naozaj stalo 🤡","Pozeraj viac na prednášajúceho a menej do mobilu 📵","Gratulujeme, získavaš titul Mgr. Smoliar 🎓","Choď sa utešiť na obed, zaslúžiš si to 🍕"];
+
+function prog(m){
+  let best = 0, bk = "", lines = 0;
+  LINES.forEach(l => {
+    const n = l.c.filter(i => m[i]).length;
+    if (n === 4) lines++;
+    else if (n > best) { best = n; bk = l.k; }
+  });
+  const total = m.filter(Boolean).length, b = total === N ? 1 : 0;
+  return {best: b ? 4 : best, bk, b, lines, total};
+}
+
+const sb = (window.supabase && !SUPABASE_URL.includes("YOUR-"))
+  ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY) : null;
+
+/* ================= STAV ================= */
+let guest = false, uid = null, email = "", room = null, code = "", local = false;
+let players = [], chan = null, selCell = -1, editing = false, hp = null;
+let confirmT = null, allT = [], editT = null;
+let me;
+try { me = JSON.parse(localStorage.getItem(K)) || {}; } catch(e) { me = {}; }
+me.name = me.name || ""; me.av = me.av || "🦊"; me.cards = me.cards || {};
+const AV = ["🦊","🐼","🐸","🦄","🐙","🦉","🐯","🐧","🦖","🐝"];
+const A = "ABCDEFGHJKMNPQRSTUVWXYZ23456789";
+const gen = () => Array.from({length:5},() => A[Math.random()*A.length|0]).join("");
+const save = () => { try { localStorage.setItem(K, JSON.stringify(me)); } catch(e) {} };
+const toast = t => { $("st").textContent = t; };
+const keyOf = () => code + "#" + (room.round || 0);
+const card = () => me.cards[keyOf()];
+const pool = () => room.phrases || [];
+const isHost = () => room && (local || (uid && room.host === uid));
+const TL = () => [...DEF, ...allT.map(t => ({id:t.id, name:t.name + (t.owner === uid ? "" : " (verejný)"), phrases:t.phrases || []}))];
+
+let firstWin = true, firstSnap = true;
+const seenW = new Set();
+const SAD = [
+  "Trest: dnes platíš kávu ☕","Minúta ticha pre tvoju kartu 🕯️",
+  "Tvoja karta bola jednoducho menej šťastná 🍀","Nabudúce skús označovať aj to, čo sa naozaj stalo 🤡",
+  "Pozeraj viac na prednášajúceho a menej do mobilu 📵",
+  "Gratulujeme, získavaš titul Mgr. Smoliar 🎓","Choď sa utešiť na obed, zaslúžiš si to 🍕"
+];
+
+/* ================= FX ================= */
 function fx(emo){
- if(matchMedia("(prefers-reduced-motion: reduce)").matches)return;
- const cv=$("cf"),x=cv.getContext("2d");cv.width=innerWidth;cv.height=innerHeight;
- const cols=["#d4ff3a","#ff5c39","#4d5dff","#141414","#f5f1e8"];
- const ps=Array.from({length:emo?40:150},()=>({x:Math.random()*cv.width,y:-20-Math.random()*cv.height*.6,vx:(Math.random()-.5)*(emo?1:4),vy:2+Math.random()*(emo?3:5),r:Math.random()*6,vr:(Math.random()-.5)*.3,s:6+Math.random()*6,c:cols[(Math.random()*cols.length)|0],e:emo&&emo[(Math.random()*emo.length)|0]}));
- const t0=performance.now();
- (function f(t){x.clearRect(0,0,cv.width,cv.height);
-  ps.forEach(p=>{p.x+=p.vx;p.y+=p.vy;p.r+=p.vr;if(!emo)p.vy+=.04;x.save();x.translate(p.x,p.y);x.rotate(p.r);
-   if(p.e){x.font="28px serif";x.fillText(p.e,0,0)}else{x.fillStyle=p.c;x.fillRect(-p.s/2,-p.s/4,p.s,p.s/2)}x.restore()});
-  if(t-t0<4000)requestAnimationFrame(f);else x.clearRect(0,0,cv.width,cv.height)})(t0);
+  if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  const cv = $("cf"), x = cv.getContext("2d");
+  cv.width = innerWidth; cv.height = innerHeight;
+  const cols = ["#d4ff3a","#ff5c39","#4d5dff","#141414","#f5f1e8"];
+  const ps = Array.from({length: emo ? 40 : 150}, () => ({
+    x: Math.random()*cv.width, y: -20-Math.random()*cv.height*.6,
+    vx: (Math.random()-.5)*(emo ? 1 : 4), vy: 2+Math.random()*(emo ? 3 : 5),
+    r: Math.random()*6, vr: (Math.random()-.5)*.3, s: 6+Math.random()*6,
+    c: cols[(Math.random()*cols.length)|0],
+    e: emo && emo[(Math.random()*emo.length)|0]
+  }));
+  const t0 = performance.now();
+  (function f(t){
+    x.clearRect(0,0,cv.width,cv.height);
+    ps.forEach(p => {
+      p.x += p.vx; p.y += p.vy; p.r += p.vr; if (!emo) p.vy += .04;
+      x.save(); x.translate(p.x,p.y); x.rotate(p.r);
+      if (p.e) { x.font = "28px serif"; x.fillText(p.e,0,0); }
+      else { x.fillStyle = p.c; x.fillRect(-p.s/2,-p.s/4,p.s,p.s/2); }
+      x.restore();
+    });
+    if (t - t0 < 4000) requestAnimationFrame(f);
+    else x.clearRect(0,0,cv.width,cv.height);
+  })(t0);
 }
 function winFx(c,b){
- if(firstWin){firstWin=false;c.fx=b;return}
- if(b>(c.fx||0))fx();
- c.fx=b}
+  if (firstWin) { firstWin = false; c.fx = b; return; }
+  if (b > (c.fx || 0)) fx();
+  c.fx = b;
+}
 function loseFx(list){
- const el=$("lose"),m=list.find(x=>x.me),w=list.filter(x=>!x.me&&x.p.b);
- if(!w.length||(m&&m.p.b)){el.hidden=true;return}
- const h=[...w[0].id].reduce((a,ch)=>a+ch.charCodeAt(0),0)+(uid?[...uid].length:0);
- el.textContent=w[0].name+(w.length>1?" a ďalší už majú":" už má")+" BINGO! 😭 "+SAD[h%SAD.length];
- el.hidden=false;
- w.forEach(x=>{if(!seenW.has(x.id)){seenW.add(x.id);if(!firstSnap)fx(["😭","💀","🤡","📉"])}})}
+  const el = $("lose"), m = list.find(x => x.me), w = list.filter(x => !x.me && x.p.b);
+  if (!w.length || (m && m.p.b)) { el.hidden = true; return; }
+  const h = [...w[0].id].reduce((a,ch) => a + ch.charCodeAt(0), 0) + (uid ? [...uid].length : 0);
+  el.textContent = w[0].name + (w.length > 1 ? " a ďalší už majú" : " už má") + " BINGO! 😭 " + SAD[h % SAD.length];
+  el.hidden = false;
+  w.forEach(x => {
+    if (!seenW.has(x.id)) { seenW.add(x.id); if (!firstSnap) fx(["😭","💀","🤡","📉"]); }
+  });
+}
 
-function saveProf(){save();if(db&&uid&&canWrite)db.doc("data/users/"+uid+"/profile").set({name:me.name,av:me.av}).catch(()=>{})}
-function show(v){$("lobby").hidden=v!=="l";$("game").hidden=v!=="g"}
+/* ================= PROFIL ================= */
+function saveProf(){
+  save();
+  if (sb && uid && !guest) {
+    sb.from("profiles").upsert({id:uid, name:me.name, avatar:me.av}).then(()=>{});
+  }
+}
+function show(v){ $("lobby").hidden = v !== "l"; $("game").hidden = v !== "g"; }
+
+/* ================= LOBBY ================= */
 function drawLobby(){
- const b=$("avs");b.innerHTML="";
- AV.forEach(a=>{const x=document.createElement("button");x.textContent=a;x.className="av"+(a===me.av?" sel":"");x.onclick=()=>{me.av=a;saveProf();drawLobby()};b.appendChild(x)});
- if($("nm")!==document.activeElement)$("nm").value=me.name;
- $("auth").textContent=uid?(guest?"👤 Hosť – bez účtu":"✅ "+email):"Nie si prihlásený – stačí zadať kód miestnosti.";
- const host=!sb||(uid&&!guest);
- $("lo").hidden=!uid||guest;$("tb").hidden=!(sb&&uid&&!guest);$("cbx").hidden=!host;$("hlp").hidden=!(sb&&!host);
- const s=$("rp"),old=s.value;s.innerHTML="";
- TL().forEach((p,i)=>{const o=document.createElement("option");o.value=i;o.textContent=p.name;s.appendChild(o)});
- if(old)s.value=old}
-$("nm").oninput=()=>{me.name=$("nm").value.trim();save()};
-$("nm").onchange=saveProf;
+  const b = $("avs"); b.innerHTML = "";
+  AV.forEach(a => {
+    const x = document.createElement("button");
+    x.textContent = a; x.className = "av" + (a === me.av ? " sel" : "");
+    x.onclick = () => { me.av = a; saveProf(); drawLobby(); };
+    b.appendChild(x);
+  });
+  if ($("nm") !== document.activeElement) $("nm").value = me.name;
 
-const cred=()=>({email:$("le").value.trim().toLowerCase(),password:$("lp").value});
-const authErr=m=>/invalid login/i.test(m)?"Zlé meno alebo heslo.":/already/i.test(m)?"Tento e-mail je už zaregistrovaný.":/password/i.test(m)?"Heslo musí mať aspoň 6 znakov.":/email/i.test(m)?"Skontroluj e-mail: "+m:m;
-const okName=()=>{if(!/^\S+@\S+\.\S+$/.test(cred().email)){$("lerr").textContent="Zadaj platný e-mail.";return false}return true};
-$("li").onclick=async()=>{if(!sb||!okName())return;const{error}=await sb.auth.signInWithPassword(cred());$("lerr").textContent=error?authErr(error.message):""};
-$("su").onclick=async()=>{if(!sb||!okName())return;const{data,error}=await sb.auth.signUp(cred());$("lerr").textContent=error?authErr(error.message):(data.session?"":"Účet vytvorený, teraz sa prihlás.")};
-$("lo").onclick=()=>sb&&sb.auth.signOut();
-$("so").onclick=()=>{show("l");drawLobby()};
-$("gl").onclick=()=>show("a");
+  $("auth").textContent = uid ? (guest ? "👤 Hosť – bez účtu" : "✅ " + email) : "Nie si prihlásený.";
+  $("lo").hidden = !uid;
 
-async function loadT(){if(!sb)return;const{data}=await sb.from("teachers").select("*").order("name");allT=data||[];drawT()}
+  const registered = !!(sb && uid && !guest);
+  $("tb").hidden   = !registered;
+  $("cbx").hidden  = !registered;   // vytvoriť miestnosť len registrovaní
+  $("hlp").hidden  = registered || !sb;
+
+  // banner
+  const ban = $("aBanner");
+  if (!sb) { ban.hidden = true; }
+  else if (guest) {
+    ban.hidden = false;
+    $("aBannerMsg").textContent = "Hráš ako hosť – nemôžeš vytvoriť miestnosť.";
+    $("aBannerBtn").textContent = "Prihlásiť sa";
+  } else if (!uid) {
+    ban.hidden = false;
+    $("aBannerMsg").textContent = "Nie si prihlásený.";
+    $("aBannerBtn").textContent = "Prihlásiť sa";
+  } else {
+    ban.hidden = true;
+  }
+
+  const s = $("rp"), old = s.value; s.innerHTML = "";
+  TL().forEach((p,i) => {
+    const o = document.createElement("option");
+    o.value = i; o.textContent = p.name; s.appendChild(o);
+  });
+  if (old) s.value = old;
+}
+
+$("nm").oninput = () => { me.name = $("nm").value.trim(); save(); };
+$("nm").onchange = saveProf;
+
+/* ================= AUTH ================= */
+const cred = () => ({ email: $("le").value.trim().toLowerCase(), password: $("lp").value });
+const authErr = m =>
+  /invalid login/i.test(m) ? "Zlé meno alebo heslo." :
+  /already/i.test(m) ? "Tento e-mail je už zaregistrovaný." :
+  /password/i.test(m) ? "Heslo musí mať aspoň 6 znakov." :
+  /email/i.test(m) ? "Skontroluj e-mail: " + m : m;
+const okName = () => {
+  if (!/^\S+@\S+\.\S+$/.test(cred().email)) { $("lerr").textContent = "Zadaj platný e-mail."; return false; }
+  return true;
+};
+
+$("li").onclick = async () => {
+  if (!sb || !okName()) return;
+  $("lerr").textContent = "";
+  const { error } = await sb.auth.signInWithPassword(cred());
+  $("lerr").textContent = error ? authErr(error.message) : "";
+};
+$("su").onclick = async () => {
+  if (!sb || !okName()) return;
+  $("lerr").textContent = "";
+  const { data, error } = await sb.auth.signUp(cred());
+  if (error) { $("lerr").textContent = authErr(error.message); return; }
+  if (!data.session) $("lerr").textContent = "Účet vytvorený – prihlás sa.";
+};
+$("lo").onclick = () => sb && sb.auth.signOut();
+$("so").onclick = () => { show("l"); drawLobby(); };
+
+// prepnutie na login z lobby/banneru
+$("gl").onclick = () => show("a");
+$("aBannerBtn").onclick = () => show("a");
+
+/* ================= UČITELIA ================= */
+async function loadT(){
+  if (!sb || !uid || guest) return;
+  const { data } = await sb.from("teachers").select("*").order("name");
+  allT = data || [];
+  drawT();
+}
 function drawT(){
- const b=$("tl");b.innerHTML="";
- allT.filter(t=>t.owner===uid).forEach(t=>{const r=document.createElement("div");r.className="hr";
-  const n=document.createElement("input");n.value=t.name+" ("+(t.phrases||[]).length+")";n.readOnly=true;
-  const e=document.createElement("button");e.textContent="✏️";e.onclick=()=>{editT=t.id;$("tn").value=t.name;$("tp").value=(t.phrases||[]).join("\n")};
-  const d=document.createElement("button");d.textContent="🗑";d.onclick=async()=>{await sb.from("teachers").delete().eq("id",t.id);loadT()};
-  r.append(n,e,d);b.appendChild(r)});
- drawLobby()}
-$("tsv").onclick=async()=>{
- const name=$("tn").value.trim(),phrases=$("tp").value.split("\n").map(s=>s.trim()).filter(Boolean);
- if(!name||!sb)return;
- if(editT)await sb.from("teachers").update({name,phrases}).eq("id",editT);else await sb.from("teachers").insert({name,phrases,owner:uid});
- editT=null;$("tn").value="";$("tp").value="";loadT()};
-$("tcl").onclick=()=>{editT=null;$("tn").value="";$("tp").value=""};
+  const b = $("tl"); b.innerHTML = "";
+  allT.filter(t => t.owner === uid).forEach(t => {
+    const r = document.createElement("div"); r.className = "hr";
+    const n = document.createElement("input");
+    n.value = t.name + " (" + (t.phrases || []).length + ")"; n.readOnly = true;
+    const e = document.createElement("button"); e.textContent = "✏️";
+    e.onclick = () => { editT = t.id; $("tn").value = t.name; $("tp").value = (t.phrases || []).join("\n"); };
+    const d = document.createElement("button"); d.textContent = "🗑";
+    d.onclick = async () => { await sb.from("teachers").delete().eq("id", t.id); loadT(); };
+    r.append(n,e,d); b.appendChild(r);
+  });
+  drawLobby();
+}
+$("tsv").onclick = async () => {
+  const name = $("tn").value.trim();
+  const phrases = $("tp").value.split("\n").map(s => s.trim()).filter(Boolean);
+  if (!name || !sb || !uid || guest) return;
+  if (editT) await sb.from("teachers").update({name,phrases}).eq("id", editT);
+  else await sb.from("teachers").insert({name,phrases,owner:uid});
+  editT = null; $("tn").value = ""; $("tp").value = ""; loadT();
+};
+$("tcl").onclick = () => { editT = null; $("tn").value = ""; $("tp").value = ""; };
 
-const mp=r=>({id:r.user_id,room:r.room,name:r.name,av:r.avatar,marks:r.marks||[],ts:Date.parse(r.updated_at)||Date.now()});
+/* ================= HRÁČI / ROOM ================= */
+const mp = r => ({
+  id: r.user_id, room: r.room, name: r.name, av: r.avatar,
+  marks: r.marks || [], ts: Date.parse(r.updated_at) || Date.now()
+});
+
 async function ensureUser(){
- if(uid)return true;
- const{data,error}=await sb.auth.signInAnonymously();
- if(error){$("jerr").textContent="Vstup bez účtu nie je zapnutý (Supabase → Authentication → Allow anonymous sign-ins).";return false}
- await onUser(data.user);return true}
+  if (uid) return true;
+  const { data, error } = await sb.auth.signInAnonymously();
+  if (error) {
+    $("jerr").textContent = "Vstup bez účtu nie je zapnutý (Supabase → Authentication → Allow anonymous).";
+    return false;
+  }
+  await onUser(data.user);
+  return true;
+}
+
 async function join(c){
- c=(c||"").toUpperCase().trim();if(!c||!sb)return;if(!await ensureUser())return;
- const{data}=await sb.from("rooms").select("*").eq("code",c).maybeSingle();
- if(!data){$("jerr").textContent="Miestnosť "+c+" sa nenašla.";return}
- if(chan)sb.removeChannel(chan);
- room=data;code=c;local=false;hp=null;$("jerr").textContent="";
- const{data:ps}=await sb.from("players").select("*").eq("room",c);players=(ps||[]).map(mp);
- chan=sb.channel("room-"+c)
-  .on("postgres_changes",{event:"*",schema:"public",table:"players",filter:"room=eq."+c},p=>{
-   if(p.eventType==="DELETE")players=players.filter(x=>x.id!==p.old.user_id);
-   else{const r=mp(p.new);players=[...players.filter(x=>x.id!==r.id),r]}
-   renderBoard()})
-  .on("postgres_changes",{event:"UPDATE",schema:"public",table:"rooms",filter:"code=eq."+c},p=>{room=p.new;hp=null;render()})
-  .subscribe();
- try{location.hash=c}catch(e){}
- me.last=c;save();show("g");render();push()}
+  c = (c || "").toUpperCase().trim();
+  if (!c || !sb) return;
+  if (!await ensureUser()) return;
+  const { data } = await sb.from("rooms").select("*").eq("code", c).maybeSingle();
+  if (!data) { $("jerr").textContent = "Miestnosť " + c + " sa nenašla."; return; }
+  if (chan) sb.removeChannel(chan);
+  room = data; code = c; local = false; hp = null; $("jerr").textContent = "";
+  const { data: ps } = await sb.from("players").select("*").eq("room", c);
+  players = (ps || []).map(mp);
+  chan = sb.channel("room-" + c)
+    .on("postgres_changes", {event:"*", schema:"public", table:"players", filter:"room=eq." + c}, p => {
+      if (p.eventType === "DELETE") players = players.filter(x => x.id !== p.old.user_id);
+      else {
+        const r = mp(p.new);
+        players = [...players.filter(x => x.id !== r.id), r];
+      }
+      renderBoard();
+    })
+    .on("postgres_changes", {event:"UPDATE", schema:"public", table:"rooms", filter:"code=eq." + c}, p => {
+      room = p.new; hp = null; render();
+    })
+    .subscribe();
+  try { location.hash = c; } catch(e) {}
+  me.last = c; save(); show("g"); render(); push();
+}
+
 async function create(){
- const p=TL()[$("rp").value|0]||DEF[0],name=$("rn").value.trim()||p.name;
- if(sb&&uid){const c=gen();
-  const{error}=await sb.from("rooms").insert({code:c,name,host:uid,phrases:p.phrases,round:0});
-  if(error){$("jerr").textContent="Vytvorenie zlyhalo: "+error.message;return}
-  join(c)}
- else{code="SOLO";local=true;room={name,host:"local",phrases:[...p.phrases],round:0};show("g");render()}}
+  const p = TL()[$("rp").value|0] || DEF[0];
+  const name = $("rn").value.trim() || p.name;
+  if (!sb) {
+    code = "SOLO"; local = true;
+    room = {name, host:"local", phrases:[...p.phrases], round:0};
+    show("g"); render(); return;
+  }
+  if (!uid || guest) { show("a"); return; }
+  const c = gen();
+  const { error } = await sb.from("rooms").insert({code:c, name, host:uid, phrases:p.phrases, round:0});
+  if (error) { $("jerr").textContent = "Vytvorenie zlyhalo: " + error.message; return; }
+  join(c);
+}
+
 function leave(){
- if(chan){sb.removeChannel(chan);chan=null}
- if(sb&&uid&&!local&&code)sb.from("players").delete().eq("room",code).eq("user_id",uid).then(()=>{});
- room=null;code="";local=false;players=[];try{location.hash=""}catch(e){}
- show("l");drawLobby()}
-$("jb").onclick=()=>join($("jc").value);
-$("jc").onkeydown=e=>{if(e.key==="Enter")join($("jc").value)};
-$("cb").onclick=create;$("lv").onclick=leave;
-$("rc").onclick=()=>{try{navigator.clipboard.writeText(code).then(()=>toast("Kód skopírovaný."))}catch(e){}};
+  if (chan) { sb.removeChannel(chan); chan = null; }
+  if (sb && uid && !local && code) sb.from("players").delete().eq("room", code).eq("user_id", uid).then(()=>{});
+  room = null; code = ""; local = false; players = [];
+  try { location.hash = ""; } catch(e) {}
+  show("l"); drawLobby();
+}
+
+$("jb").onclick = () => join($("jc").value);
+$("jc").onkeydown = e => { if (e.key === "Enter") join($("jc").value); };
+$("cb").onclick = create;
+$("lv").onclick = leave;
+$("rc").onclick = () => { try { navigator.clipboard.writeText(code).then(()=>toast("Kód skopírovaný.")); } catch(e) {} };
+
 function push(){
- if(!sb||!uid||local||!room)return;const c=card();if(!c)return;
- sb.from("players").upsert({room:code,user_id:uid,name:me.name||"Hráč",avatar:me.av,marks:c.m,updated_at:new Date().toISOString()},{onConflict:"room,user_id"}).then(x=>{if(x&&x.error&&x.error.code==="23503"){leave();$("jerr").textContent="Miestnosť vypršala."}})}
+  if (!sb || !uid || local || !room) return;
+  const c = card(); if (!c) return;
+  sb.from("players").upsert({
+    room: code, user_id: uid, name: me.name || "Hráč",
+    avatar: me.av, marks: c.m, updated_at: new Date().toISOString()
+  }, {onConflict:"room,user_id"}).then(x => {
+    if (x && x.error && x.error.code === "23503") {
+      leave(); $("jerr").textContent = "Miestnosť vypršala.";
+    }
+  });
+}
 
-function newCard(){const p=[...pool()].sort(()=>Math.random()-.5).slice(0,N);while(p.length<N)p.push("");
- me.cards[keyOf()]={t:p,m:Array(N).fill(false)};selCell=-1;changed()}
-function changed(){save();push();render()}
+/* ================= KARTA / RENDER ================= */
+function newCard(){
+  const p = [...pool()].sort(() => Math.random() - .5).slice(0, N);
+  while (p.length < N) p.push("");
+  me.cards[keyOf()] = {t:p, m:Array(N).fill(false)};
+  selCell = -1; changed();
+}
+function changed(){ save(); push(); render(); }
+
 function render(){
- if(!room)return;
- if(!card()){newCard();return}
- const c=card(),p=prog(c.m);
- $("rt").textContent=room.name;$("rc").textContent=local?"SOLO":code;$("rc").hidden=local;
- toast(local?"Hráš sám – ostatní ťa neuvidia.":"🟢 Živo – ostatní ťa vidia v rebríčku.");
- const win=new Set();LINES.forEach(l=>{if(l.c.every(i=>c.m[i]))l.c.forEach(i=>win.add(i))});
- $("msg").textContent=p.b?"🎉 BINGO!":p.lines?"✅ Hotová línia ×"+p.lines+" · "+p.total+"/16":"";
- winFx(c,p.b);
- const g=$("grid");g.innerHTML="";g.className=editing?"edm":"";
- c.t.forEach((t,i)=>{const d=document.createElement("div");
-  d.className="c"+(c.m[i]?" on":"")+(win.has(i)?" w":"");
-  d.textContent=t||"(prázdne)";
-  d.onclick=()=>{if(editing)openSheet(i);else{c.m[i]=!c.m[i];changed()}};
-  g.appendChild(d)});
- renderBoard();
- $("host").hidden=!isHost();
- if(isHost()&&hp===null)drawHost();
+  if (!room) return;
+  if (!card()) { newCard(); return; }
+  const c = card(), p = prog(c.m);
+  $("rt").textContent = room.name;
+  $("rc").textContent = local ? "SOLO" : code;
+  $("rc").hidden = local;
+  toast(local ? "Hráš sám – ostatní ťa neuvidia." : "🟢 Živo – ostatní ťa vidia v rebríčku.");
+
+  const win = new Set();
+  LINES.forEach(l => { if (l.c.every(i => c.m[i])) l.c.forEach(i => win.add(i)); });
+  $("msg").textContent = p.b ? "🎉 BINGO!" :
+    p.lines ? "✅ Hotová línia ×" + p.lines + " · " + p.total + "/16" : "";
+  winFx(c, p.b);
+
+  const g = $("grid"); g.innerHTML = ""; g.className = editing ? "edm" : "";
+  c.t.forEach((t,i) => {
+    const d = document.createElement("div");
+    d.className = "c" + (c.m[i] ? " on" : "") + (win.has(i) ? " w" : "");
+    d.textContent = t || "(prázdne)";
+    d.onclick = () => {
+      if (editing) openSheet(i);
+      else { c.m[i] = !c.m[i]; changed(); }
+    };
+    g.appendChild(d);
+  });
+
+  renderBoard();
+  $("host").hidden = !isHost();
+  if (isHost() && hp === null) drawHost();
 }
+
 function renderBoard(){
- if(!room)return;
- const now=Date.now(),c=card();
- let list=local?[]:players.filter(x=>x.room===code&&now-(x.ts||0)<6*3600e3&&x.id!==uid);
- if(c)list.push({id:uid||"me",name:me.name||"Hráč",av:me.av,marks:c.m,me:true});
- list=list.map(x=>({...x,p:prog(x.marks||[])}));
- list.sort((a,b)=>b.p.b-a.p.b||b.p.total-a.p.total||b.p.lines-a.p.lines);
- $("cnt").textContent="("+list.length+")";
- loseFx(list);
- const bd=$("board");bd.innerHTML="";
- list.forEach(x=>{
-  const r=document.createElement("div");r.className="pl"+(x.me?" me":"")+(x.p.b?" bg":"");
-  const a=document.createElement("div");a.className="pa";a.textContent=x.av||"🙂";
-  const n=document.createElement("div");n.className="pn";n.textContent=(x.p.b?"🏆 ":"")+x.name+(x.me?" (ty)":"");
-  const pips=document.createElement("div");pips.className="pips";
-  for(let i=0;i<4;i++){const d=document.createElement("div");d.className="pip"+(i<x.p.best?" f":"")+(i<x.p.best&&x.p.best===3?" hot":"")+(x.p.b?" bg":"");pips.appendChild(d)}
-  const i=document.createElement("div");i.className="pi";
-  i.textContent=x.p.b?"BINGO":x.p.total>=14?"⚡ chýba "+(16-x.p.total):(x.p.lines?"✅"+x.p.lines+" · ":(x.p.best?x.p.best+"/4 v "+x.p.bk+" · ":""))+x.p.total+"/16";
-  r.append(a,n,pips,i);bd.appendChild(r)});
+  if (!room) return;
+  const now = Date.now(), c = card();
+  let list = local ? [] : players.filter(x => x.room === code && now - (x.ts||0) < 6*3600e3 && x.id !== uid);
+  if (c) list.push({id:uid||"me", name:me.name||"Hráč", av:me.av, marks:c.m, me:true});
+  list = list.map(x => ({...x, p:prog(x.marks||[])}));
+  list.sort((a,b) => b.p.b - a.p.b || b.p.total - a.p.total || b.p.lines - a.p.lines);
+  $("cnt").textContent = "(" + list.length + ")";
+  loseFx(list);
+
+  const bd = $("board"); bd.innerHTML = "";
+  list.forEach(x => {
+    const r = document.createElement("div");
+    r.className = "pl" + (x.me ? " me" : "") + (x.p.b ? " bg" : "");
+    const a = document.createElement("div"); a.className = "pa"; a.textContent = x.av || "🙂";
+    const n = document.createElement("div"); n.className = "pn";
+    n.textContent = (x.p.b ? "🏆 " : "") + x.name + (x.me ? " (ty)" : "");
+    const pips = document.createElement("div"); pips.className = "pips";
+    for (let i = 0; i < 4; i++) {
+      const d = document.createElement("div");
+      d.className = "pip" + (i < x.p.best ? " f" : "") +
+        (i < x.p.best && x.p.best === 3 ? " hot" : "") +
+        (x.p.b ? " bg" : "");
+      pips.appendChild(d);
+    }
+    const i = document.createElement("div"); i.className = "pi";
+    i.textContent = x.p.b ? "BINGO" :
+      x.p.total >= 14 ? "⚡ chýba " + (16 - x.p.total) :
+      (x.p.lines ? "✅" + x.p.lines + " · " :
+       (x.p.best ? x.p.best + "/4 v " + x.p.bk + " · " : "")) + x.p.total + "/16";
+    r.append(a,n,pips,i); bd.appendChild(r);
+  });
 }
 
-$("shuf").onclick=()=>{const b=$("shuf");
- if(card().m.some(x=>x)&&!confirmT){b.textContent="Naozaj? Ťukni znova";confirmT=setTimeout(()=>{confirmT=null;b.textContent="🔀 Nová karta"},3000);return}
- clearTimeout(confirmT);confirmT=null;b.textContent="🔀 Nová karta";newCard()};
-$("clr").onclick=()=>{card().m.fill(false);changed()};
-$("ed").onclick=()=>{editing=!editing;$("ed").className=editing?"p":"";if(editing)toast("Ťukni na políčko, ktoré chceš zmeniť.");render()};
+/* ================= OVLÁDANIE HRY ================= */
+$("shuf").onclick = () => {
+  const b = $("shuf");
+  if (card().m.some(x => x) && !confirmT) {
+    b.textContent = "Naozaj? Ťukni znova";
+    confirmT = setTimeout(() => { confirmT = null; b.textContent = "🔀 Nová karta"; }, 3000);
+    return;
+  }
+  clearTimeout(confirmT); confirmT = null;
+  b.textContent = "🔀 Nová karta"; newCard();
+};
+$("clr").onclick = () => { card().m.fill(false); changed(); };
+$("ed").onclick = () => {
+  editing = !editing;
+  $("ed").className = editing ? "p" : "";
+  if (editing) toast("Ťukni na políčko, ktoré chceš zmeniť.");
+  render();
+};
 
-function closeSheet(){$("sh").hidden=true;selCell=-1}
+function closeSheet(){ $("sh").hidden = true; selCell = -1; }
 function drawList(q){
- const used=new Set(card().t),box=$("sl");box.innerHTML="";q=(q||"").toLowerCase();
- pool().filter(p=>!used.has(p)&&p.toLowerCase().includes(q)).slice(0,30).forEach(p=>{
-  const b=document.createElement("button");b.textContent=p;b.onclick=()=>setCell(p);box.appendChild(b)})}
-function openSheet(i){selCell=i;$("sh").hidden=false;$("si").value=card().t[i];drawList("")}
-function setCell(v){if(selCell<0)return;card().t[selCell]=v;closeSheet();changed()}
-$("si").oninput=()=>drawList($("si").value);
-$("sv").onclick=()=>setCell($("si").value.trim());
-$("sr").onclick=()=>{const u=new Set(card().t),f=pool().filter(p=>!u.has(p));if(f.length)setCell(f[Math.random()*f.length|0])};
-$("sx").onclick=closeSheet;
+  const used = new Set(card().t), box = $("sl"); box.innerHTML = "";
+  q = (q || "").toLowerCase();
+  pool().filter(p => !used.has(p) && p.toLowerCase().includes(q))
+       .slice(0,30).forEach(p => {
+    const b = document.createElement("button");
+    b.textContent = p; b.onclick = () => setCell(p); box.appendChild(b);
+  });
+}
+function openSheet(i){ selCell = i; $("sh").hidden = false; $("si").value = card().t[i]; drawList(""); }
+function setCell(v){ if (selCell < 0) return; card().t[selCell] = v; closeSheet(); changed(); }
+$("si").oninput = () => drawList($("si").value);
+$("sv").onclick = () => setCell($("si").value.trim());
+$("sr").onclick = () => {
+  const u = new Set(card().t), f = pool().filter(p => !u.has(p));
+  if (f.length) setCell(f[Math.random()*f.length|0]);
+};
+$("sx").onclick = closeSheet;
 
+/* ================= HOST PANEL ================= */
 function drawHost(){
- hp=hp||[...pool()];const b=$("hl");b.innerHTML="";
- hp.forEach((t,i)=>{const r=document.createElement("div");r.className="hr";
-  const x=document.createElement("input");x.value=t;x.oninput=()=>{hp[i]=x.value};
-  const d=document.createElement("button");d.textContent="✕";d.onclick=()=>{hp.splice(i,1);drawHost()};
-  r.append(x,d);b.appendChild(r)})}
-$("ha").onclick=()=>{const v=$("hn").value.trim();if(!v)return;hp=hp||[...pool()];hp.push(v);$("hn").value="";drawHost()};
+  hp = hp || [...pool()];
+  const b = $("hl"); b.innerHTML = "";
+  hp.forEach((t,i) => {
+    const r = document.createElement("div"); r.className = "hr";
+    const x = document.createElement("input"); x.value = t; x.oninput = () => { hp[i] = x.value; };
+    const d = document.createElement("button"); d.textContent = "✕";
+    d.onclick = () => { hp.splice(i,1); drawHost(); };
+    r.append(x,d); b.appendChild(r);
+  });
+}
+$("ha").onclick = () => {
+  const v = $("hn").value.trim(); if (!v) return;
+  hp = hp || [...pool()]; hp.push(v); $("hn").value = ""; drawHost();
+};
 async function saveRoom(patch){
- room={...room,...patch};hp=null;
- if(!local&&sb)await sb.from("rooms").update(patch).eq("code",code);
- render()}
-$("hs").onclick=()=>saveRoom({phrases:(hp||pool()).map(s=>s.trim()).filter(Boolean)});
-$("hr").onclick=()=>saveRoom({round:(room.round||0)+1});
+  room = {...room, ...patch}; hp = null;
+  if (!local && sb) await sb.from("rooms").update(patch).eq("code", code);
+  render();
+}
+$("hs").onclick = () => saveRoom({phrases:(hp || pool()).map(s => s.trim()).filter(Boolean)});
+$("hr").onclick = () => saveRoom({round:(room.round || 0) + 1});
 
+/* ================= ŠTART ================= */
 drawLobby();
+show("l");
+
 async function onUser(u){
- const h=(location.hash||"").slice(1);
- if(!u){uid=null;email="";guest=false;allT=[];room=null;show("l");drawLobby();if(h)join(h);return}
- if(u.id===uid)return;
- uid=u.id;guest=!!u.is_anonymous;email=u.email||"";
- if(!guest){
-  const{data}=await sb.from("profiles").select("*").eq("id",uid).maybeSingle();
-  if(data){me.name=data.name||me.name;me.av=data.avatar||me.av}
-  if(!me.name)me.name=email.split("@")[0];
-  saveProf();await loadT()}
- drawLobby();
- if(!room){show("l");if(h)join(h);else if(me.last)$("jc").value=me.last}}
-if(sb)sb.auth.onAuthStateChange((_e,s)=>{onUser(s&&s.user)});
-else{show("l");drawLobby()}
-window.addEventListener("hashchange",()=>{const h=(location.hash||"").slice(1);if(h&&h!==code)join(h)});
+  const h = (location.hash || "").slice(1);
+  if (!u) {
+    uid = null; email = ""; guest = false; allT = [];
+    room = null;
+    show("l"); drawLobby();
+    if (h) join(h);
+    return;
+  }
+  if (u.id === uid) return;
+  uid = u.id; guest = !!u.is_anonymous; email = u.email || "";
+
+  if (!guest) {
+    const { data } = await sb.from("profiles").select("*").eq("id", uid).maybeSingle();
+    if (data) { me.name = data.name || me.name; me.av = data.avatar || me.av; }
+    if (!me.name) me.name = email.split("@")[0];
+    saveProf();
+    await loadT();
+  }
+  drawLobby();
+  if (!room) {
+    show("l"); drawLobby();
+    if (h) join(h);
+    else if (me.last) $("jc").value = me.last;
+  }
+}
+
+if (sb) {
+  sb.auth.getSession().then(({data}) => onUser(data.session && data.session.user));
+  sb.auth.onAuthStateChange((_e, s) => onUser(s && s.user));
+} else {
+  show("l"); drawLobby();
+}
+
+window.addEventListener("hashchange", () => {
+  const h = (location.hash || "").slice(1);
+  if (h && h !== code) join(h);
+});
 </script>
 </body>
 </html>
