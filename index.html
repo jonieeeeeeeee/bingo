@@ -65,7 +65,7 @@ summary{cursor:pointer;font-weight:600}
   <h1>🎯 Prednáškové bingo</h1>
   <p class="sub">Prihlás sa alebo si vytvor účet.</p>
   <div class="box">
-    <input id="le" placeholder="Meno (login)" maxlength="20" autocomplete="username" autocapitalize="none">
+    <input id="le" type="email" placeholder="E-mail" autocomplete="email" autocapitalize="none">
     <input id="lp" type="password" placeholder="Heslo (min. 6 znakov)" autocomplete="current-password">
     <div class="row"><button class="p" id="li">Prihlásiť</button><button id="su">Vytvoriť účet</button></div>
     <div class="err" id="lerr"></div>
@@ -339,7 +339,7 @@ function drawLobby(){
  const b=$("avs");b.innerHTML="";
  AV.forEach(a=>{const x=document.createElement("button");x.textContent=a;x.className="av"+(a===me.av?" sel":"");x.onclick=()=>{me.av=a;saveProf();drawLobby()};b.appendChild(x)});
  if($("nm")!==document.activeElement)$("nm").value=me.name;
- $("auth").textContent=uid?"✅ "+email.split("@")[0]:"Samostatný režim – bez účtu sa online hrať nedá.";
+ $("auth").textContent=uid?"✅ "+email:"Samostatný režim – bez účtu sa online hrať nedá.";
  $("lo").hidden=!uid;$("tb").hidden=!uid;
  const s=$("rp"),old=s.value;s.innerHTML="";
  TL().forEach((p,i)=>{const o=document.createElement("option");o.value=i;o.textContent=p.name;s.appendChild(o)});
@@ -348,11 +348,9 @@ $("nm").oninput=()=>{me.name=$("nm").value.trim();save()};
 $("nm").onchange=saveProf;
 
 // účty
-const DOM="@bingo-hraci.app";
-const uname=()=>$("le").value.normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase().replace(/[^a-z0-9._-]/g,"");
-const cred=()=>({email:uname()+DOM,password:$("lp").value});
-const authErr=m=>/invalid login/i.test(m)?"Zlé meno alebo heslo.":/already/i.test(m)?"Toto meno je už obsadené.":/password/i.test(m)?"Heslo musí mať aspoň 6 znakov.":m;
-const okName=()=>{if(uname().length<3){$("lerr").textContent="Meno má mať aspoň 3 znaky (a–z, 0–9).";return false}return true};
+const cred=()=>({email:$("le").value.trim().toLowerCase(),password:$("lp").value});
+const authErr=m=>/invalid login/i.test(m)?"Zlé meno alebo heslo.":/already/i.test(m)?"Tento e-mail je už zaregistrovaný.":/password/i.test(m)?"Heslo musí mať aspoň 6 znakov.":/email/i.test(m)?"Skontroluj e-mail: "+m:m;
+const okName=()=>{if(!/^\S+@\S+\.\S+$/.test(cred().email)){$("lerr").textContent="Zadaj platný e-mail.";return false}return true};
 $("li").onclick=async()=>{if(!sb||!okName())return;const{error}=await sb.auth.signInWithPassword(cred());$("lerr").textContent=error?authErr(error.message):""};
 $("su").onclick=async()=>{if(!sb||!okName())return;const{data,error}=await sb.auth.signUp(cred());$("lerr").textContent=error?authErr(error.message):(data.session?"":"Účet vytvorený, teraz sa prihlás.")};
 $("lo").onclick=()=>sb&&sb.auth.signOut();
