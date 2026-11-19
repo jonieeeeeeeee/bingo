@@ -1,0 +1,12 @@
+# Po `supabase init` nahraď / uprav tieto sekcie v supabase/config.toml
+project_id = "bingo"
+
+[auth]
+enabled = true
+site_url = "https://TVOJA-APKA.vercel.app"
+additional_redirect_urls = ["https://TVOJA-APKA.vercel.app"]
+minimum_password_length = 6
+
+[auth.email]
+enable_signup = true
+enable_confirmations = false   # prihlasovanie menom bez e-mailu

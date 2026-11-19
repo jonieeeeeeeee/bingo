@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Prednáškové bingo</title>
+<style>
+:root{--bg:#f3f1fb;--card:#fff;--tx:#1d1b2b;--mut:#6f6c84;--bd:#e1def0;--ac:#6d4cf5;--ac2:#e84fa0;--acbg:#ece8ff;--win:#1f9d55;--warn:#e8892b;--sh:0 2px 10px rgba(60,40,140,.10);
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#14121f;--card:#1f1c30;--tx:#f1eff9;--mut:#a29fba;--bd:#33304a;--ac:#8e74ff;--ac2:#ff6db5;--acbg:#2b2650;--win:#3ec97a;--warn:#f0a050;--sh:0 2px 12px rgba(0,0,0,.4);color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#14121f;--card:#1f1c30;--tx:#f1eff9;--mut:#a29fba;--bd:#33304a;--ac:#8e74ff;--ac2:#ff6db5;--acbg:#2b2650;--win:#3ec97a;--warn:#f0a050;--sh:0 2px 12px rgba(0,0,0,.4);color-scheme:dark}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--tx);font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;padding:14px;max-width:560px;margin-inline:auto}
+[hidden]{display:none!important}
+h1{font-size:1.7rem;margin:6px 0 2px;background:linear-gradient(90deg,var(--ac),var(--ac2));-webkit-background-clip:text;background-clip:text;color:transparent}
+h2{font-size:1rem;margin:18px 0 8px}
+.sub{color:var(--mut);margin:0 0 14px}
+.box{background:var(--card);border:1px solid var(--bd);border-radius:16px;padding:14px;margin-bottom:12px;box-shadow:var(--sh)}
+.box h3{margin:0 0 10px;font-size:1rem}
+select,textarea,input,button{font:inherit;color:var(--tx);background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:10px 12px}
+select,input,textarea{width:100%;margin-bottom:8px}
+button{cursor:pointer;transition:transform .1s}
+button:active{transform:scale(.96)}
+button.p{background:linear-gradient(135deg,var(--ac),var(--ac2));border:0;color:#fff;font-weight:600}
+.row{display:flex;gap:8px;margin-bottom:8px;flex-wrap:wrap}
+.row>*{flex:1}
+#avs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px}
+.av{font-size:1.4rem;padding:6px 9px;flex:none}
+.av.sel{border-color:var(--ac);background:var(--acbg)}
+.err{color:var(--warn);font-size:.85rem;min-height:1em}
+.top{display:flex;align-items:center;gap:8px;margin-bottom:6px}
+.top b{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:1.05rem}
+.chip{flex:none;font-weight:800;letter-spacing:.12em;background:var(--acbg);color:var(--ac);border-color:var(--ac)}
+#st{font-size:.8rem;color:var(--mut);margin:2px 0}
+#msg{text-align:center;font-size:1.4rem;font-weight:800;color:var(--win);min-height:1.7rem}
+#lose{background:var(--card);border:2px dashed var(--warn);border-radius:14px;padding:10px 12px;margin:8px 0;text-align:center;font-weight:600}
+#cf{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:50}
+#grid{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;margin:10px 0}
+.c{aspect-ratio:1;display:flex;align-items:center;justify-content:center;text-align:center;padding:4px;font-size:clamp(.62rem,2.8vw,.85rem);line-height:1.2;background:var(--card);border:1px solid var(--bd);border-radius:14px;box-shadow:var(--sh);overflow:hidden;word-break:break-word;cursor:pointer;user-select:none;hyphens:auto;transition:transform .15s,background .2s}
+.c.on{background:linear-gradient(135deg,var(--ac),var(--ac2));border-color:transparent;color:#fff;font-weight:600;animation:pop .25s}
+.c.w{background:linear-gradient(135deg,#1f9d55,#3ec97a);color:#fff}
+.edm .c{outline:2px dashed var(--ac);outline-offset:-3px}
+@keyframes pop{50%{transform:scale(1.08)}}
+.pl{display:flex;align-items:center;gap:10px;background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:8px 10px;margin-bottom:6px;box-shadow:var(--sh)}
+.pl.me{border-color:var(--ac)}.pl.bg{border-color:var(--win)}
+.pa{font-size:1.4rem}
+.pn{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-weight:600}
+.pips{display:flex;gap:3px}
+.pip{width:14px;height:14px;border-radius:4px;background:var(--bd)}
+.pip.f{background:var(--ac)}.pip.f.hot{background:var(--warn)}.pip.f.bg{background:var(--win)}
+.pi{font-size:.75rem;color:var(--mut);text-align:right;min-width:112px}
+details{margin-top:10px;background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:10px 12px}
+summary{cursor:pointer;font-weight:600}
+.hr{display:flex;gap:6px;margin-bottom:6px}.hr input{margin:0}.hr button{flex:none}
+#sh{position:fixed;left:0;right:0;bottom:0;z-index:40;background:var(--card);border-radius:20px 20px 0 0;box-shadow:0 -8px 30px rgba(0,0,0,.3);padding:14px 14px calc(14px + env(safe-area-inset-bottom,0px));max-height:75%;overflow:auto;max-width:560px;margin:auto}
+#sl{display:flex;flex-direction:column;gap:6px;margin-top:8px}
+#sl button{text-align:left}
+</style>
+</head>
+<body>
+<canvas id="cf"></canvas>
+
+<section id="login" hidden>
+  <h1>🎯 Prednáškové bingo</h1>
+  <p class="sub">Prihlás sa alebo si vytvor účet.</p>
+  <div class="box">
+    <input id="le" placeholder="Meno (login)" maxlength="20" autocomplete="username" autocapitalize="none">
+    <input id="lp" type="password" placeholder="Heslo (min. 6 znakov)" autocomplete="current-password">
+    <div class="row"><button class="p" id="li">Prihlásiť</button><button id="su">Vytvoriť účet</button></div>
+    <div class="err" id="lerr"></div>
+    <button id="so" style="width:100%">Hrať sám bez účtu</button>
+  </div>
+</section>
+
+<section id="lobby" hidden>
+  <h1>🎯 Prednáškové bingo</h1>
+  <p class="sub">Vytvor miestnosť, pošli kód spolužiakom a hrajte spolu naživo.</p>
+  <div class="box">
+    <h3>👤 Tvoj profil</h3>
+    <div id="avs"></div>
+    <input id="nm" placeholder="Prezývka" maxlength="20">
+    <div class="row"><small id="auth" style="color:var(--mut);align-self:center"></small><button id="lo" style="flex:0 0 auto">Odhlásiť</button></div>
+  </div>
+  <div class="box">
+    <h3>🔑 Pripojiť sa do miestnosti</h3>
+    <div class="row"><input id="jc" placeholder="KÓD" maxlength="5" style="text-transform:uppercase;letter-spacing:.2em;margin:0"><button class="p" id="jb" style="flex:0 0 auto">Pripojiť</button></div>
+    <div class="err" id="jerr"></div>
+  </div>
+  <div class="box" id="tb">
+    <h3>🧑‍🏫 Učitelia a hlášky</h3>
+    <div id="tl"></div>
+    <input id="tn" placeholder="Meno učiteľa" maxlength="40">
+    <textarea id="tp" placeholder="Hlášky – jedna na riadok" style="min-height:90px"></textarea>
+    <div class="row"><button class="p" id="tsv">Uložiť učiteľa</button><button id="tcl">Nový / zrušiť</button></div>
+    <small style="color:var(--mut)">Učitelia sú verejní – vybrať si ich môže každý pri vytváraní miestnosti.</small>
+  </div>
+  <div class="box">
+    <h3>➕ Vytvoriť miestnosť</h3>
+    <input id="rn" placeholder="Názov (napr. Matika 1 – utorok)" maxlength="40">
+    <select id="rp" aria-label="Predvolený zoznam"></select>
+    <button class="p" id="cb" style="width:100%">Vytvoriť miestnosť</button>
+  </div>
+</section>
+
+<section id="game" hidden>
+  <div class="top"><button id="lv">←</button><b id="rt"></b><button class="chip" id="rc" title="Kopírovať kód"></button></div>
+  <div id="st"></div>
+  <div id="msg"></div>
+  <div id="lose" hidden></div>
+  <div id="grid"></div>
+  <div class="row">
+    <button class="p" id="shuf">🔀 Nová karta</button>
+    <button id="clr">Zrušiť značky</button>
+    <button id="ed">✏️ Upraviť políčka</button>
+  </div>
+  <h2>👥 Kto je ako ďaleko <small id="cnt"></small></h2>
+  <div id="board"></div>
+  <details id="host" hidden>
+    <summary>🛠 Správca miestnosti</summary>
+    <p><small>Frázy v miestnosti (z nich sa skladajú karty). Nové kolo všetkým vygeneruje čistú kartu.</small></p>
+    <div id="hl"></div>
+    <div class="hr"><input id="hn" placeholder="Nová fráza"><button id="ha">➕</button></div>
+    <div class="row"><button class="p" id="hs">Uložiť frázy</button><button id="hr">🔄 Nové kolo</button></div>
+  </details>
+</section>
+
+<div id="sh" hidden>
+  <b>Zmeniť políčko</b>
+  <input id="si" placeholder="Hľadaj frázu alebo napíš vlastnú" maxlength="70" style="margin-top:8px">
+  <div class="row"><button class="p" id="sv">Použiť môj text</button><button id="sr">🎲 Náhodná</button><button id="sx">Zavrieť</button></div>
+  <div id="sl"></div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
+<script>
+const SUPABASE_URL="https://YOUR-PROJECT.supabase.co",SUPABASE_ANON_KEY="YOUR-ANON-KEY";
+const N=16,K="bingo_v4";
+const $=i=>document.getElementById(i);
+const DEF=[
+ {id:"kollar",name:"Mgr. Jozef Kollár, PhD.",phrases:["Toto už viete zo strednej školy","To je úplne triviálne","Pozor, tu sa na skúške najčastejšie mýlite","Upravíme si to do krajšieho tvaru","Tento príklad bol na minulom zápočte","Zvyšok si doma ľahko dopočítate","Nezabudnite na definičný obor!","Je to všetkým jasné? (hrobové ticho)","Vidíte to tam všetci?","Kto pôjde tento príklad vypočítať k tabuli?","Spravíme to z hlavy, nebudeme to rozpisovať","Tu použijeme malý matematický trik","Pozrime sa na to sedliackym rozumom","Veľký pozor na znamienko v tomto kroku","Ak neviete toto, na skúšku ani nechoďte","Tento krok preskočíme, to je čistá algebra","Na prednáške ste si to už dokazovali","Ešte stihneme jeden rýchly príklad pred koncom","Celá tabuľa plná, výsledok je 0 alebo 1","Stratí sa mínus a hľadá sa o 5 riadkov nižšie","Zmazanie tabule holou rukou alebo rukávom","Nekonečno (∞) vyzerá ako deformovaný zemiak","Grécke písmeno, ktoré nevieš prečítať (ξ, ζ)","Zlomok na tri poschodia","Písanie tak nízko, že zadné rady nič nevidia","Zotretie tabule skôr, než si to stihneš odpísať","Krieda/fixka vypovie službu v strede príkladu","Kvílivý zvuk kriedy/fixky","Jeden príklad trvá vyše 20 minút","Študent opraví chybu vo výpočte cvičiaceho","Otázka z pléna: „Bude toto na zápočte?“","Niekto príde o 10+ minút neskôr","Všetci hľadajú niečo v batohu, keď sa vyvoláva","Niekto v prvej lavici horlivo prikyvuje","Spolužiak vedľa otvorí WolframAlpha / GPT","Hlasný zúfalý povzdych zo zadnej lavice","Niekto v lavici pozerá šport / e-shop","Najťažší príklad sa začne riešiť 3 min pred koncom","Niekomu spadne fľaša/pero v úplnom tichu","Hromadný kontrolný pohľad na hodinky"]},
+ {id:"d1",name:"Učiteľ 1 (ukážka)",phrases:["„Ako vidíte“","Zabudol heslo k počítaču","Projektor nefunguje","Odbočil od témy","„Toto nebude na skúške“","Prišiel neskoro","Kreslí na tabuľu a nikto nevidí","Spomenul svoju diplomovku","„Ešte tri minúty“","Prekročil čas","Zadal domácu úlohu","Pýta sa „Je to jasné?“","Niekomu zazvonil mobil","Niekto zaspal vpredu","„Pozrieme sa na príklad“","Povedal meno študenta zle","Vtip, ktorý nikto nepochopil","„Vráťme sa k tomu neskôr“","Prezentácia má 80+ slajdov","Povedal „napríklad“ 5×"]},
+ {id:"d2",name:"Učiteľ 2 (ukážka)",phrases:["Zrušil cvičenie","Mení termín testu","„Nie je to také ťažké“","Píše mail počas hodiny","Zabudol pripomenúť odovzdanie","Opravuje vlastnú chybu na slajde","„To si pozrite doma“","Káva na stole","Číta zo slajdov","Nahlas hovorí „hmm“","Dá bonusový bod","Zmení zadanie","Pýta sa na dochádzku","Online spojenie padlo","Pozná všetkých menom"]}
+];
+// čiary: 4 riadky, 4 stĺpce, 2 uhlopriečky
+const LINES=[];
+for(let i=0;i<4;i++)LINES.push({k:"riadku",c:[0,1,2,3].map(j=>i*4+j)});
+for(let i=0;i<4;i++)LINES.push({k:"stĺpci",c:[0,1,2,3].map(j=>j*4+i)});
+LINES.push({k:"uhlopriečke",c:[0,5,10,15]},{k:"uhlopriečke",c:[3,6,9,12]});
+function prog(m){let best=0,bk="",lines=0;
+ LINES.forEach(l=>{const n=l.c.filter(i=>m[i]).length;if(n===4)lines++;else if(n>best){best=n;bk=l.k}});
+ const total=m.filter(Boolean).length,b=total===N?1:0;
+ return{best:b?4:best,bk,b,lines,total}}
+const sb=(window.supabase&&!SUPABASE_URL.includes("YOUR-"))?window.supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY):null;
+let uid=null,email="",room=null,code="",local=false,players=[],chan=null,selCell=-1,editing=false,hp=null,confirmT=null,allT=[],editT=null;
+let me;try{me=JSON.parse(localStorage.getItem(K))||{}}catch(e){me={}}
+me.name=me.name||"";me.av=me.av||"🦊";me.cards=me.cards||{};
+const AV=["🦊","🐼","🐸","🦄","🐙","🦉","🐯","🐧","🦖","🐝"];
+const A="ABCDEFGHJKMNPQRSTUVWXYZ23456789";
+const gen=()=>Array.from({length:5},()=>A[Math.random()*A.length|0]).join("");
+const save=()=>{try{localStorage.setItem(K,JSON.stringify(me))}catch(e){}};
+const toast=t=>{$("st").textContent=t};
+const keyOf=()=>code+"#"+(room.round||0);
+const card=()=>me.cards[keyOf()];
+const pool=()=>room.phrases||[];
+const isHost=()=>room&&(local||(uid&&room.host===uid));
+const TL=()=>[...DEF,...allT.map(t=>({id:t.id,name:t.name+(t.owner===uid?"":" (verejný)"),phrases:t.phrases||[]}))];
+// efekty
+let firstWin=true,firstSnap=true;const seenW=new Set();
+const SAD=["Trest: dnes platíš kávu ☕","Minúta ticha pre tvoju kartu 🕯️","Tvoja karta bola jednoducho menej šťastná 🍀","Nabudúce skús označovať aj to, čo sa naozaj stalo 🤡","Pozeraj viac na prednášajúceho a menej do mobilu 📵","Gratulujeme, získavaš titul Mgr. Smoliar 🎓","Choď sa utešiť na obed, zaslúžiš si to 🍕"];
+function fx(emo){
+ if(matchMedia("(prefers-reduced-motion: reduce)").matches)return;
+ const cv=$("cf"),x=cv.getContext("2d");cv.width=innerWidth;cv.height=innerHeight;
+ const cols=["#ff5252","#ffb300","#4caf50","#2f6fed","#ab47bc","#00bcd4"];
+ const ps=Array.from({length:emo?40:150},()=>({x:Math.random()*cv.width,y:-20-Math.random()*cv.height*.6,vx:(Math.random()-.5)*(emo?1:4),vy:2+Math.random()*(emo?3:5),r:Math.random()*6,vr:(Math.random()-.5)*.3,s:6+Math.random()*6,c:cols[(Math.random()*cols.length)|0],e:emo&&emo[(Math.random()*emo.length)|0]}));
+ const t0=performance.now();
+ (function f(t){x.clearRect(0,0,cv.width,cv.height);
+  ps.forEach(p=>{p.x+=p.vx;p.y+=p.vy;p.r+=p.vr;if(!emo)p.vy+=.04;x.save();x.translate(p.x,p.y);x.rotate(p.r);
+   if(p.e){x.font="28px serif";x.fillText(p.e,0,0)}else{x.fillStyle=p.c;x.fillRect(-p.s/2,-p.s/4,p.s,p.s/2)}x.restore()});
+  if(t-t0<4000)requestAnimationFrame(f);else x.clearRect(0,0,cv.width,cv.height)})(t0);
+}
+function winFx(c,b){
+ if(firstWin){firstWin=false;c.fx=b;return}
+ if(b>(c.fx||0))fx();
+ c.fx=b}
+function loseFx(list){
+ const el=$("lose"),m=list.find(x=>x.me),w=list.filter(x=>!x.me&&x.p.b);
+ if(!w.length||(m&&m.p.b)){el.hidden=true;return}
+ const h=[...w[0].id].reduce((a,ch)=>a+ch.charCodeAt(0),0)+(uid?[...uid].length:0);
+ el.textContent=w[0].name+(w.length>1?" a ďalší už majú":" už má")+" BINGO! 😭 "+SAD[h%SAD.length];
+ el.hidden=false;
+ w.forEach(x=>{if(!seenW.has(x.id)){seenW.add(x.id);if(!firstSnap)fx(["😭","💀","🤡","📉"])}})}
+
+
+function saveProf(){save();if(db&&uid&&canWrite)db.doc("data/users/"+uid+"/profile").set({name:me.name,av:me.av}).catch(()=>{})}
+function show(v){$("lobby").hidden=v!=="l";$("game").hidden=v!=="g"}
+function drawLobby(){
+ const b=$("avs");b.innerHTML="";
+ AV.forEach(a=>{const x=document.createElement("button");x.textContent=a;x.className="av"+(a===me.av?" sel":"");x.onclick=()=>{me.av=a;saveProf();drawLobby()};b.appendChild(x)});
+ if($("nm")!==document.activeElement)$("nm").value=me.name;
+ $("auth").textContent=db&&uid?(canWrite?"✅ Prihlásený cez claude.ai – online hra je zapnutá.":"👀 Prihlásený, ale na hranie potrebuješ prístup „Contributor“."):"Samostatný režim – na online hru sa prihlás cez claude.ai.";
+}
+$("nm").oninput=()=>{me.name=$("nm").value.trim();save()};
+$("nm").onchange=saveProf;
+DEF.forEach((p,i)=>{const o=document.createElement("option");o.value=i;o.textContent=p.name;$("rp").appendChild(o)});
+
+function join(c){
+ c=(c||"").toUpperCase().trim();if(!c)return;
+ if(!db||!canWrite){$("jerr").textContent="Na pripojenie do miestnosti sa musíš prihlásiť.";return}
+ if(stopRoom)stopRoom();
+ code=c;local=false;$("jerr").textContent="";
+ const u=db.doc("rooms/"+c).onSnapshot(s=>{
+  if(!s.exists){room=null;show("l");$("jerr").textContent="Miestnosť "+c+" sa nenašla.";return}
+  room=s.data();hp=null;try{location.hash=c}catch(e){}
+  me.last=c;save();show("g");render();push()},()=>{$("jerr").textContent="Pripojenie zlyhalo."});
+ stopRoom=typeof u==="function"?u:null;
+}
+async function create(){
+ const p=DEF[$("rp").value|0];
+ const r={name:$("rn").value.trim()||p.name,host:uid||"local",phrases:[...p.phrases],round:0,created:Date.now()};
+ if(db&&canWrite){const c=gen();try{await db.doc("rooms/"+c).set(r);join(c)}catch(e){$("jerr").textContent="Vytvorenie zlyhalo."}}
+ else{code="SOLO";local=true;room=r;show("g");render()}
+}
+function leave(){
+ if(stopRoom){stopRoom();stopRoom=null}
+ if(db&&uid&&!local)db.doc("players/"+uid).delete().catch(()=>{});
+ room=null;code="";local=false;try{location.hash=""}catch(e){}
+ show("l");drawLobby()}
+$("jb").onclick=()=>join($("jc").value);
+$("jc").onkeydown=e=>{if(e.key==="Enter")join($("jc").value)};
+$("cb").onclick=create;$("lv").onclick=leave;
+$("rc").onclick=()=>{try{navigator.clipboard.writeText(code).then(()=>toast("Kód skopírovaný."))}catch(e){}};
+
+function newCard(){const p=[...pool()].sort(()=>Math.random()-.5).slice(0,N);while(p.length<N)p.push("");
+ me.cards[keyOf()]={t:p,m:Array(N).fill(false)};selCell=-1;changed()}
+function changed(){save();push();render()}
+function push(){
+ if(!db||!uid||!canWrite||local||!room)return;const c=card();if(!c)return;
+ db.doc("players/"+uid).set({room:code,name:me.name||"Hráč",av:me.av,marks:c.m,ts:Date.now()})
+  .catch(e=>{if(e&&e.code==="invalid_argument"){canWrite=false;render()}})}
+
+function render(){
+ if(!room)return;
+ if(!card()){newCard();return}
+ const c=card(),p=prog(c.m);
+ $("rt").textContent=room.name;$("rc").textContent=local?"SOLO":code;$("rc").hidden=local;
+ toast(local?"Hráš sám – ostatní ťa neuvidia.":"🟢 Živo – ostatní ťa vidia v rebríčku.");
+ const win=new Set();LINES.forEach(l=>{if(l.c.every(i=>c.m[i]))l.c.forEach(i=>win.add(i))});
+ $("msg").textContent=p.b?"🎉 BINGO!":p.lines?"✅ Hotová línia ×"+p.lines+" · "+p.total+"/16":"";
+ winFx(c,p.b);
+ const g=$("grid");g.innerHTML="";g.className=editing?"edm":"";
+ c.t.forEach((t,i)=>{const d=document.createElement("div");
+  d.className="c"+(c.m[i]?" on":"")+(win.has(i)?" w":"");
+  d.textContent=t||"(prázdne)";
+  d.onclick=()=>{if(editing)openSheet(i);else{c.m[i]=!c.m[i];changed()}};
+  g.appendChild(d)});
+ renderBoard();
+ $("host").hidden=!isHost();
+ if(isHost()&&hp===null)drawHost();
+}
+function renderBoard(){
+ if(!room)return;
+ const now=Date.now(),c=card();
+ let list=local?[]:players.filter(x=>x.room===code&&now-(x.ts||0)<6*3600e3&&x.id!==uid);
+ if(c)list.push({id:uid||"me",name:me.name||"Hráč",av:me.av,marks:c.m,me:true});
+ list=list.map(x=>({...x,p:prog(x.marks||[])}));
+ list.sort((a,b)=>b.p.b-a.p.b||b.p.total-a.p.total||b.p.lines-a.p.lines);
+ $("cnt").textContent="("+list.length+")";
+ loseFx(list);
+ const bd=$("board");bd.innerHTML="";
+ list.forEach(x=>{
+  const r=document.createElement("div");r.className="pl"+(x.me?" me":"")+(x.p.b?" bg":"");
+  const a=document.createElement("div");a.className="pa";a.textContent=x.av||"🙂";
+  const n=document.createElement("div");n.className="pn";n.textContent=(x.p.b?"🏆 ":"")+x.name+(x.me?" (ty)":"");
+  const pips=document.createElement("div");pips.className="pips";
+  for(let i=0;i<4;i++){const d=document.createElement("div");d.className="pip"+(i<x.p.best?" f":"")+(i<x.p.best&&x.p.best===3?" hot":"")+(x.p.b?" bg":"");pips.appendChild(d)}
+  const i=document.createElement("div");i.className="pi";
+  i.textContent=x.p.b?"BINGO":x.p.total>=14?"⚡ chýba "+(16-x.p.total):(x.p.lines?"✅"+x.p.lines+" · ":(x.p.best?x.p.best+"/4 v "+x.p.bk+" · ":""))+x.p.total+"/16";
+  r.append(a,n,pips,i);bd.appendChild(r)});
+}
+
+$("shuf").onclick=()=>{const b=$("shuf");
+ if(card().m.some(x=>x)&&!confirmT){b.textContent="Naozaj? Ťukni znova";confirmT=setTimeout(()=>{confirmT=null;b.textContent="🔀 Nová karta"},3000);return}
+ clearTimeout(confirmT);confirmT=null;b.textContent="🔀 Nová karta";newCard()};
+$("clr").onclick=()=>{card().m.fill(false);changed()};
+$("ed").onclick=()=>{editing=!editing;$("ed").className=editing?"p":"";if(editing)toast("Ťukni na políčko, ktoré chceš zmeniť.");render()};
+
+// úprava políčka (spodný panel)
+function closeSheet(){$("sh").hidden=true;selCell=-1}
+function drawList(q){
+ const used=new Set(card().t),box=$("sl");box.innerHTML="";q=(q||"").toLowerCase();
+ pool().filter(p=>!used.has(p)&&p.toLowerCase().includes(q)).slice(0,30).forEach(p=>{
+  const b=document.createElement("button");b.textContent=p;b.onclick=()=>setCell(p);box.appendChild(b)})}
+function openSheet(i){selCell=i;$("sh").hidden=false;$("si").value=card().t[i];drawList("")}
+function setCell(v){if(selCell<0)return;card().t[selCell]=v;closeSheet();changed()}
+$("si").oninput=()=>drawList($("si").value);
+$("sv").onclick=()=>setCell($("si").value.trim());
+$("sr").onclick=()=>{const u=new Set(card().t),f=pool().filter(p=>!u.has(p));if(f.length)setCell(f[Math.random()*f.length|0])};
+$("sx").onclick=closeSheet;
+
+// správca miestnosti
+function drawHost(){
+ hp=hp||[...pool()];const b=$("hl");b.innerHTML="";
+ hp.forEach((t,i)=>{const r=document.createElement("div");r.className="hr";
+  const x=document.createElement("input");x.value=t;x.oninput=()=>{hp[i]=x.value};
+  const d=document.createElement("button");d.textContent="✕";d.onclick=()=>{hp.splice(i,1);drawHost()};
+  r.append(x,d);b.appendChild(r)})}
+$("ha").onclick=()=>{const v=$("hn").value.trim();if(!v)return;hp=hp||[...pool()];hp.push(v);$("hn").value="";drawHost()};
+function saveRoom(patch){
+ const r={...room,...patch};
+ if(local){room=r;hp=null;render();return}
+ db.doc("rooms/"+code).set(r).catch(()=>toast("Uloženie zlyhalo."))}
+$("hs").onclick=()=>saveRoom({phrases:(hp||pool()).map(s=>s.trim()).filter(Boolean)});
+$("hr").onclick=()=>saveRoom({round:(room.round||0)+1});
+
+drawLobby();
+(async()=>{
+ try{
+  const [d,u]=await Promise.all([claude.use("db"),claude.use("user")]);
+  if(!d||!u)return;
+  uid=await u.id();if(!uid)return;
+  db=d;const w=u.can("data.write");canWrite=w!==false;
+  try{const ps=await db.doc("data/users/"+uid+"/profile").get();
+   if(ps.exists){const o=ps.data();me.name=me.name||o.name||"";me.av=o.av||me.av}
+   else if(!me.name){const m=await u.me();if(m&&m.name)me.name=m.name}}catch(e){}
+  drawLobby();
+  db.collection("players").onSnapshot(s=>{
+   players=s.docs.map(x=>({id:x.id,...x.data()}));renderBoard();firstSnap=false},()=>{});
+  const h=(location.hash||"").slice(1);
+  if(h)join(h);else if(me.last)$("jc").value=me.last;
+ }catch(e){db=null}
+})();
+window.addEventListener("hashchange",()=>{const h=(location.hash||"").slice(1);if(h&&h!==code)join(h)});
+
+
+function show(v){$("login").hidden=v!=="a";$("lobby").hidden=v!=="l";$("game").hidden=v!=="g"}
+function saveProf(){save();if(sb&&uid)sb.from("profiles").upsert({id:uid,name:me.name,avatar:me.av}).then(()=>{})}
+function drawLobby(){
+ const b=$("avs");b.innerHTML="";
+ AV.forEach(a=>{const x=document.createElement("button");x.textContent=a;x.className="av"+(a===me.av?" sel":"");x.onclick=()=>{me.av=a;saveProf();drawLobby()};b.appendChild(x)});
+ if($("nm")!==document.activeElement)$("nm").value=me.name;
+ $("auth").textContent=uid?"✅ "+email.split("@")[0]:"Samostatný režim – bez účtu sa online hrať nedá.";
+ $("lo").hidden=!uid;$("tb").hidden=!uid;
+ const s=$("rp"),old=s.value;s.innerHTML="";
+ TL().forEach((p,i)=>{const o=document.createElement("option");o.value=i;o.textContent=p.name;s.appendChild(o)});
+ if(old)s.value=old}
+$("nm").oninput=()=>{me.name=$("nm").value.trim();save()};
+$("nm").onchange=saveProf;
+
+// účty
+const DOM="@bingo-hraci.app";
+const uname=()=>$("le").value.normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase().replace(/[^a-z0-9._-]/g,"");
+const cred=()=>({email:uname()+DOM,password:$("lp").value});
+const authErr=m=>/invalid login/i.test(m)?"Zlé meno alebo heslo.":/already/i.test(m)?"Toto meno je už obsadené.":/password/i.test(m)?"Heslo musí mať aspoň 6 znakov.":m;
+const okName=()=>{if(uname().length<3){$("lerr").textContent="Meno má mať aspoň 3 znaky (a–z, 0–9).";return false}return true};
+$("li").onclick=async()=>{if(!sb||!okName())return;const{error}=await sb.auth.signInWithPassword(cred());$("lerr").textContent=error?authErr(error.message):""};
+$("su").onclick=async()=>{if(!sb||!okName())return;const{data,error}=await sb.auth.signUp(cred());$("lerr").textContent=error?authErr(error.message):(data.session?"":"Účet vytvorený, teraz sa prihlás.")};
+$("lo").onclick=()=>sb&&sb.auth.signOut();
+$("so").onclick=()=>{show("l");drawLobby()};
+
+// učitelia
+async function loadT(){if(!sb)return;const{data}=await sb.from("teachers").select("*").order("name");allT=data||[];drawT()}
+function drawT(){
+ const b=$("tl");b.innerHTML="";
+ allT.filter(t=>t.owner===uid).forEach(t=>{const r=document.createElement("div");r.className="hr";
+  const n=document.createElement("input");n.value=t.name+" ("+(t.phrases||[]).length+")";n.readOnly=true;
+  const e=document.createElement("button");e.textContent="✏️";e.onclick=()=>{editT=t.id;$("tn").value=t.name;$("tp").value=(t.phrases||[]).join("\n")};
+  const d=document.createElement("button");d.textContent="🗑";d.onclick=async()=>{await sb.from("teachers").delete().eq("id",t.id);loadT()};
+  r.append(n,e,d);b.appendChild(r)});
+ drawLobby()}
+$("tsv").onclick=async()=>{
+ const name=$("tn").value.trim(),phrases=$("tp").value.split("\n").map(s=>s.trim()).filter(Boolean);
+ if(!name||!sb)return;
+ if(editT)await sb.from("teachers").update({name,phrases}).eq("id",editT);else await sb.from("teachers").insert({name,phrases,owner:uid});
+ editT=null;$("tn").value="";$("tp").value="";loadT()};
+$("tcl").onclick=()=>{editT=null;$("tn").value="";$("tp").value=""};
+
+// miestnosti
+const mp=r=>({id:r.user_id,room:r.room,name:r.name,av:r.avatar,marks:r.marks||[],ts:Date.parse(r.updated_at)||Date.now()});
+async function join(c){
+ c=(c||"").toUpperCase().trim();if(!c||!sb||!uid)return;
+ const{data}=await sb.from("rooms").select("*").eq("code",c).maybeSingle();
+ if(!data){$("jerr").textContent="Miestnosť "+c+" sa nenašla.";return}
+ if(chan)sb.removeChannel(chan);
+ room=data;code=c;local=false;hp=null;$("jerr").textContent="";
+ const{data:ps}=await sb.from("players").select("*").eq("room",c);players=(ps||[]).map(mp);
+ chan=sb.channel("room-"+c)
+  .on("postgres_changes",{event:"*",schema:"public",table:"players",filter:"room=eq."+c},p=>{
+   if(p.eventType==="DELETE")players=players.filter(x=>x.id!==p.old.user_id);
+   else{const r=mp(p.new);players=[...players.filter(x=>x.id!==r.id),r]}
+   renderBoard()})
+  .on("postgres_changes",{event:"UPDATE",schema:"public",table:"rooms",filter:"code=eq."+c},p=>{room=p.new;hp=null;render()})
+  .subscribe();
+ try{location.hash=c}catch(e){}
+ me.last=c;save();show("g");render();push()}
+async function create(){
+ const p=TL()[$("rp").value|0]||DEF[0],name=$("rn").value.trim()||p.name;
+ if(sb&&uid){const c=gen();
+  const{error}=await sb.from("rooms").insert({code:c,name,host:uid,phrases:p.phrases,round:0});
+  if(error){$("jerr").textContent="Vytvorenie zlyhalo: "+error.message;return}
+  join(c)}
+ else{code="SOLO";local=true;room={name,host:"local",phrases:[...p.phrases],round:0};show("g");render()}}
+function leave(){
+ if(chan){sb.removeChannel(chan);chan=null}
+ if(sb&&uid&&!local&&code)sb.from("players").delete().eq("room",code).eq("user_id",uid).then(()=>{});
+ room=null;code="";local=false;players=[];try{location.hash=""}catch(e){}
+ show("l");drawLobby()}
+$("jb").onclick=()=>join($("jc").value);
+$("jc").onkeydown=e=>{if(e.key==="Enter")join($("jc").value)};
+$("cb").onclick=create;$("lv").onclick=leave;
+$("rc").onclick=()=>{try{navigator.clipboard.writeText(code).then(()=>toast("Kód skopírovaný."))}catch(e){}};
+function push(){
+ if(!sb||!uid||local||!room)return;const c=card();if(!c)return;
+ sb.from("players").upsert({room:code,user_id:uid,name:me.name||"Hráč",avatar:me.av,marks:c.m,updated_at:new Date().toISOString()},{onConflict:"room,user_id"}).then(()=>{})}
+
+function newCard(){const p=[...pool()].sort(()=>Math.random()-.5).slice(0,N);while(p.length<N)p.push("");
+ me.cards[keyOf()]={t:p,m:Array(N).fill(false)};selCell=-1;changed()}
+function changed(){save();push();render()}
+function render(){
+ if(!room)return;
+ if(!card()){newCard();return}
+ const c=card(),p=prog(c.m);
+ $("rt").textContent=room.name;$("rc").textContent=local?"SOLO":code;$("rc").hidden=local;
+ toast(local?"Hráš sám – ostatní ťa neuvidia.":"🟢 Živo – ostatní ťa vidia v rebríčku.");
+ const win=new Set();LINES.forEach(l=>{if(l.c.every(i=>c.m[i]))l.c.forEach(i=>win.add(i))});
+ $("msg").textContent=p.b?"🎉 BINGO!":p.lines?"✅ Hotová línia ×"+p.lines+" · "+p.total+"/16":"";
+ winFx(c,p.b);
+ const g=$("grid");g.innerHTML="";g.className=editing?"edm":"";
+ c.t.forEach((t,i)=>{const d=document.createElement("div");
+  d.className="c"+(c.m[i]?" on":"")+(win.has(i)?" w":"");
+  d.textContent=t||"(prázdne)";
+  d.onclick=()=>{if(editing)openSheet(i);else{c.m[i]=!c.m[i];changed()}};
+  g.appendChild(d)});
+ renderBoard();
+ $("host").hidden=!isHost();
+ if(isHost()&&hp===null)drawHost();
+}
+function renderBoard(){
+ if(!room)return;
+ const now=Date.now(),c=card();
+ let list=local?[]:players.filter(x=>x.room===code&&now-(x.ts||0)<6*3600e3&&x.id!==uid);
+ if(c)list.push({id:uid||"me",name:me.name||"Hráč",av:me.av,marks:c.m,me:true});
+ list=list.map(x=>({...x,p:prog(x.marks||[])}));
+ list.sort((a,b)=>b.p.b-a.p.b||b.p.total-a.p.total||b.p.lines-a.p.lines);
+ $("cnt").textContent="("+list.length+")";
+ loseFx(list);
+ const bd=$("board");bd.innerHTML="";
+ list.forEach(x=>{
+  const r=document.createElement("div");r.className="pl"+(x.me?" me":"")+(x.p.b?" bg":"");
+  const a=document.createElement("div");a.className="pa";a.textContent=x.av||"🙂";
+  const n=document.createElement("div");n.className="pn";n.textContent=(x.p.b?"🏆 ":"")+x.name+(x.me?" (ty)":"");
+  const pips=document.createElement("div");pips.className="pips";
+  for(let i=0;i<4;i++){const d=document.createElement("div");d.className="pip"+(i<x.p.best?" f":"")+(i<x.p.best&&x.p.best===3?" hot":"")+(x.p.b?" bg":"");pips.appendChild(d)}
+  const i=document.createElement("div");i.className="pi";
+  i.textContent=x.p.b?"BINGO":x.p.total>=14?"⚡ chýba "+(16-x.p.total):(x.p.lines?"✅"+x.p.lines+" · ":(x.p.best?x.p.best+"/4 v "+x.p.bk+" · ":""))+x.p.total+"/16";
+  r.append(a,n,pips,i);bd.appendChild(r)});
+}
+
+$("shuf").onclick=()=>{const b=$("shuf");
+ if(card().m.some(x=>x)&&!confirmT){b.textContent="Naozaj? Ťukni znova";confirmT=setTimeout(()=>{confirmT=null;b.textContent="🔀 Nová karta"},3000);return}
+ clearTimeout(confirmT);confirmT=null;b.textContent="🔀 Nová karta";newCard()};
+$("clr").onclick=()=>{card().m.fill(false);changed()};
+$("ed").onclick=()=>{editing=!editing;$("ed").className=editing?"p":"";if(editing)toast("Ťukni na políčko, ktoré chceš zmeniť.");render()};
+
+// úprava políčka (spodný panel)
+function closeSheet(){$("sh").hidden=true;selCell=-1}
+function drawList(q){
+ const used=new Set(card().t),box=$("sl");box.innerHTML="";q=(q||"").toLowerCase();
+ pool().filter(p=>!used.has(p)&&p.toLowerCase().includes(q)).slice(0,30).forEach(p=>{
+  const b=document.createElement("button");b.textContent=p;b.onclick=()=>setCell(p);box.appendChild(b)})}
+function openSheet(i){selCell=i;$("sh").hidden=false;$("si").value=card().t[i];drawList("")}
+function setCell(v){if(selCell<0)return;card().t[selCell]=v;closeSheet();changed()}
+$("si").oninput=()=>drawList($("si").value);
+$("sv").onclick=()=>setCell($("si").value.trim());
+$("sr").onclick=()=>{const u=new Set(card().t),f=pool().filter(p=>!u.has(p));if(f.length)setCell(f[Math.random()*f.length|0])};
+$("sx").onclick=closeSheet;
+
+function drawHost(){
+ hp=hp||[...pool()];const b=$("hl");b.innerHTML="";
+ hp.forEach((t,i)=>{const r=document.createElement("div");r.className="hr";
+  const x=document.createElement("input");x.value=t;x.oninput=()=>{hp[i]=x.value};
+  const d=document.createElement("button");d.textContent="✕";d.onclick=()=>{hp.splice(i,1);drawHost()};
+  r.append(x,d);b.appendChild(r)})}
+$("ha").onclick=()=>{const v=$("hn").value.trim();if(!v)return;hp=hp||[...pool()];hp.push(v);$("hn").value="";drawHost()};
+async function saveRoom(patch){
+ room={...room,...patch};hp=null;
+ if(!local&&sb)await sb.from("rooms").update(patch).eq("code",code);
+ render()}
+$("hs").onclick=()=>saveRoom({phrases:(hp||pool()).map(s=>s.trim()).filter(Boolean)});
+$("hr").onclick=()=>saveRoom({round:(room.round||0)+1});
+
+// štart
+drawLobby();
+async function onUser(u){
+ if(!u){uid=null;email="";allT=[];room=null;show("a");return}
+ if(u.id===uid)return;
+ uid=u.id;email=u.email||"";
+ const{data}=await sb.from("profiles").select("*").eq("id",uid).maybeSingle();
+ if(data){me.name=data.name||me.name;me.av=data.avatar||me.av}
+ if(!me.name)me.name=email.split("@")[0];
+ saveProf();await loadT();drawLobby();show("l");
+ const h=(location.hash||"").slice(1);
+ if(h)join(h);else if(me.last)$("jc").value=me.last}
+if(sb)sb.auth.onAuthStateChange((_e,s)=>{onUser(s&&s.user)});
+else{show("a");$("lerr").textContent="Backend nie je nastavený (pozri README). Môžeš hrať sám."}
+window.addEventListener("hashchange",()=>{const h=(location.hash||"").slice(1);if(h&&h!==code)join(h)});
+
+</script>
+</body>
+</html>
