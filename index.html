@@ -422,7 +422,11 @@ function saveProf(){
     sb.from("profiles").upsert({id:uid, name:me.name, avatar:me.av}).then(()=>{});
   }
 }
-function show(v){ $("lobby").hidden = v !== "l"; $("game").hidden = v !== "g"; }
+function show(v){
+  $("lobby").hidden = v !== "l";
+  $("game").hidden  = v !== "g";
+  $("login").hidden = v !== "a";
+}
 
 /* ================= LOBBY ================= */
 function drawLobby(){
@@ -498,8 +502,8 @@ $("lo").onclick = () => sb && sb.auth.signOut();
 $("so").onclick = () => { show("l"); drawLobby(); };
 
 // prepnutie na login z lobby/banneru
-$("gl").onclick = () => show("a");
-$("aBannerBtn").onclick = () => show("a");
+$("gl").onclick        = () => { $("lerr").textContent = ""; show("a"); };
+$("aBannerBtn").onclick = () => { $("lerr").textContent = ""; show("a"); };
 
 /* ================= UČITELIA ================= */
 async function loadT(){
