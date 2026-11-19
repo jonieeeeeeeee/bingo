@@ -175,6 +175,7 @@ small{color:var(--mut);font-size:.82rem}
       <button id="su">Vytvoriť účet</button>
     </div>
     <div class="err" id="lerr"></div>
+    <div id="lok" style="display:none;background:var(--ac);color:var(--ac-tx);border:var(--border);padding:10px;font-weight:700;text-align:center;box-shadow:var(--sh);margin-top:6px">✅ Prihlásený, presúvam ťa…</div>
   </div>
   <div class="box">
     <h3>🚪 Hrať bez účtu</h3>
@@ -426,6 +427,7 @@ function show(v){
   $("lobby").hidden = v !== "l";
   $("game").hidden  = v !== "g";
   $("login").hidden = v !== "a";
+  if (v === "a") $("lok").style.display = "none";
 }
 
 /* ================= LOBBY ================= */
@@ -488,15 +490,29 @@ const okName = () => {
 $("li").onclick = async () => {
   if (!sb || !okName()) return;
   $("lerr").textContent = "";
-  const { error } = await sb.auth.signInWithPassword(cred());
-  $("lerr").textContent = error ? authErr(error.message) : "";
+  const { data, error } = await sb.auth.signInWithPassword(cred());
+  if (error) { $("lerr").textContent = authErr(error.message); return; }
+  $("lok").style.display = "block";
+  await onUser(data.user);
+  setTimeout(() => {
+    if (uid) { show("l"); drawLobby(); }
+  }, 400);
 };
+
 $("su").onclick = async () => {
   if (!sb || !okName()) return;
   $("lerr").textContent = "";
   const { data, error } = await sb.auth.signUp(cred());
   if (error) { $("lerr").textContent = authErr(error.message); return; }
-  if (!data.session) $("lerr").textContent = "Účet vytvorený – prihlás sa.";
+  if (!data.session) {
+    $("lerr").textContent = "Účet vytvorený – skontroluj e-mail a prihlás sa.";
+    return;
+  }
+  $("lok").style.display = "block";
+  await onUser(data.user);
+  setTimeout(() => {
+    if (uid) { show("l"); drawLobby(); }
+  }, 400);
 };
 $("lo").onclick = () => sb && sb.auth.signOut();
 $("so").onclick = () => { show("l"); drawLobby(); };
@@ -785,7 +801,7 @@ async function onUser(u){
   }
   drawLobby();
   if (!room) {
-    show("l"); drawLobby();
+    show("l"); drawLobby();          // vždy do lobby
     if (h) join(h);
     else if (me.last) $("jc").value = me.last;
   }
